@@ -1,0 +1,2 @@
+#USERS 
+getAll: http://localhost:8000/users/getAll
