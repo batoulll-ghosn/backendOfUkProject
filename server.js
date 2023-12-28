@@ -7,10 +7,12 @@ const bodyParser = require("body-parser");
 const express = require("express");
 const app = express();
 connection=require("./config/connection");
-
-// Setup body-parser middleware
+const cors = require ('cors');
 app.use(bodyParser.json());
-
+app.get ("/",(req,res)=>{
+    res.setHeader("Acceess-Control-Allow-Credentials","true");
+    res.send("API is running ..");
+});
 const userRoutes = require("./routes/userRoutes");
 app.use("/users", userRoutes);
 
