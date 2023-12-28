@@ -1,2 +1,6 @@
 #USERS 
 getAll: http://localhost:8000/users/getAll
+register:http://localhost:8000/users/register
+login:http://localhost:8000/users/login
+deleteUser:http://localhost:8000/users/deleteUser/:id
+updateUserInfo:http://localhost:8000/users/editUser/:id
