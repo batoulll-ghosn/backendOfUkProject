@@ -14,8 +14,9 @@ app.get ("/",(req,res)=>{
     res.send("API is running ..");
 });
 const userRoutes = require("./routes/userRoutes");
+const courseRoutes = require("./routes/courseRoutes");
 app.use("/users", userRoutes);
-
+app.use("/courses",courseRoutes)
 app.listen(8000,()=>{
    console.log('server is running on port:8000')
 })

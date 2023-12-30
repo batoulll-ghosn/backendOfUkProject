@@ -1,0 +1,13 @@
+const express = require("express");
+const multer = require('multer');
+const upload = multer({ storage: multer.memoryStorage() });
+const router = express.Router();
+const control = require("../controllers/courseController");
+router.get("/getAll", control.getAllCourses);
+router.get("/getByLanguageName/:languageName", control.getAllCoursesByName);
+router.get("/getByType/:type", control.getAllCoursesByType);
+router.get("/getByLanguageLevel/:level", control.getAllCoursesByLevel);
+router.post('/AddCourse',upload.single('img'), control.AddCourse);
+router.put('/EditCourse/:id',upload.single('img'),control.UpdateCourse);
+router.delete('/deleteCourse/:id',control.deleteCourse);
+module.exports = router;

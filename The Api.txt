@@ -1,6 +1,21 @@
 #USERS 
 getAll: http://localhost:8000/users/getAll
+getAllActiveUsers: http://localhost:8000/users/getAllActiveUsers
+getAllNonActiveUsers: http://localhost:8000/users/getAllNonActiveUsers
+getUsersByRole: http://localhost:8000/users/getUsersByRole/:role
+getUsersByfullName:http://localhost:8000/users/getUserByFullName/:fullName
 register:http://localhost:8000/users/register
 login:http://localhost:8000/users/login
 deleteUser:http://localhost:8000/users/deleteUser/:id
 updateUserInfo:http://localhost:8000/users/editUser/:id
+updateUserToActive:http://localhost:8000/users/updateToActiveUser/:id
+updateUserToNonActive:http://localhost:8000/users/updateToNonActiveUser/:id
+
+#COURSES
+getAll: http://localhost:8000/courses/getAll
+getAllByLanguageName:http://localhost:8000/courses/getByLanguageName/:languageName
+getAllByType:http://localhost:8000/courses/getByType/:type
+getAllByLanguageLevel:http://localhost:8000/courses/getByLanguageLevel/:level
+addCourse:http://localhost:8000/courses/AddCourse
+updateCourse:http://localhost:8000/courses/EditCourse/:id
+deleteCourse:http://localhost:8000/courses/deleteCourse/:id
