@@ -58,6 +58,23 @@ const {
      });
     }
    };
+   const getAllCoursesByType = async (req, res) => {
+    try {
+     const { type } = req.params;
+     const [result] = await dbb.query(`SELECT * FROM course WHERE type='${type}'`);
+     res.status(200).json({
+       success: true,
+       message: "Courses data retrieved successfully",
+       data: result,
+     });
+    } catch (error) {
+     res.status(400).json({
+       success: false,
+       message: "Unable to get courses",
+       error,
+     });
+    }
+   };
 const AddCourse = async (req, res) => {
     const { languageName, level, zoom_link } = req.body;
   
@@ -195,4 +212,4 @@ const UpdateCourse = async (req, res) => {
         }
       };
     module.exports = {
-       AddCourse,UpdateCourse,deleteCourse,getAllCourses,getAllCoursesByName,getAllCoursesByLevel}
+       AddCourse,UpdateCourse,deleteCourse,getAllCourses,getAllCoursesByType,getAllCoursesByName,getAllCoursesByLevel}
