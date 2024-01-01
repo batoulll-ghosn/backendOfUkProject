@@ -9,17 +9,11 @@ const app = express();
 connection=require("./config/connection");
 const cors = require ('cors');
 app.use(bodyParser.json());
-app.get ("/",(req,res)=>{
-    res.setHeader("Acceess-Control-Allow-Credentials","true");
-    res.send("API is running ..");
-});
+
 const userRoutes = require("./routes/userRoutes");
 const courseRoutes = require("./routes/courseRoutes");
 app.use("/users", userRoutes);
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send({ success: false, message: 'Internal Server Error', error: err });
-   });
+
    
 app.use("/courses",courseRoutes)
 app.listen(8000,()=>{
