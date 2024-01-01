@@ -1,0 +1,147 @@
+CREATE TABLE users (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  username VARCHAR(255),
+  fullName VARCHAR(255),
+  img VARCHAR(255),
+  gender VARCHAR(255),
+  role VARCHAR(255),
+  created_at TIMESTAMP,
+  active BOOLEAN
+);
+
+CREATE TABLE Donate (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  donatorname VARCHAR(255),
+  amountOfDonation VARCHAR(255),
+  workshop_id INT
+);
+
+CREATE TABLE workshops (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  workshopname VARCHAR(255),
+  type VARCHAR(255),
+  date DATE
+);
+
+CREATE TABLE EngagedToWorkshop (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  workshop_id INT,
+  user_id INT
+);
+
+CREATE TABLE confrences (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  conference_name VARCHAR(255),
+  type VARCHAR(255),
+  date VARCHAR(30),
+  img  VARCHAR(130)
+);
+
+CREATE TABLE EngagedToConfrence (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  confrence_id INT,
+  user_id INT
+);
+
+CREATE TABLE AttendanceToConfrence (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  engaged_id INT,
+  attended BOOLEAN
+);
+
+CREATE TABLE services (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  img VARCHAR(255),
+  name VARCHAR(255),
+  type VARCHAR(255),
+  description VARCHAR(255)
+);
+
+CREATE TABLE engagedToService (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  service_id INT,
+  user_id INT,
+  engagement_email BOOLEAN
+);
+
+CREATE TABLE course (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  languageName VARCHAR(255),
+  level VARCHAR(255),
+  img VARCHAR(255),
+  zoom_link VARCHAR(255),
+  type VARCHAR(25)
+);
+
+CREATE TABLE Recordings (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  course_id INT,
+  drive_video VARCHAR(255)
+);
+
+CREATE TABLE testemoniage (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  user_id INT,
+  type VARCHAR(255),
+  nameOftestemoniated VARCHAR(255),
+  description VARCHAR(255)
+);
+
+CREATE TABLE AttendanceToCourse (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  user_id INT,
+  schedule_id INT,
+  attended BOOLEAN
+);
+
+CREATE TABLE ScheduleToCourse (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  course_id INT,
+  day VARCHAR(255),
+  hour VARCHAR(255)
+);
+
+CREATE TABLE EnrolledToCourse (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  course_id INT,
+  user_id INT
+);
+ALTER TABLE Donate
+  ADD FOREIGN KEY (workshop_id) REFERENCES workshops(id);
+
+ALTER TABLE EngagedToWorkshop
+  ADD FOREIGN KEY (workshop_id) REFERENCES workshops(id),
+  ADD FOREIGN KEY (user_id) REFERENCES users(id);
+
+ALTER TABLE EngagedToConfrence
+  ADD FOREIGN KEY (confrence_id) REFERENCES confrences(id),
+  ADD FOREIGN KEY (user_id) REFERENCES users(id);
+
+ALTER TABLE AttendanceToConfrence
+  ADD FOREIGN KEY (engaged_id) REFERENCES EngagedToConfrence(id);
+
+ALTER TABLE engagedToService
+  ADD FOREIGN KEY (service_id) REFERENCES services(id),
+  ADD FOREIGN KEY (user_id) REFERENCES users(id);
+
+ALTER TABLE Recordings
+  ADD FOREIGN KEY (course_id) REFERENCES course(id);
+
+ALTER TABLE testemoniage
+  ADD FOREIGN KEY (user_id) REFERENCES users(id);
+
+ALTER TABLE AttendanceToCourse
+  ADD FOREIGN KEY (user_id) REFERENCES users(id),
+  ADD FOREIGN KEY (schedule_id) REFERENCES ScheduleToCourse(id);
+
+ALTER TABLE ScheduleToCourse
+  ADD FOREIGN KEY (course_id) REFERENCES course(id);
+
+ALTER TABLE EnrolledToCourse
+  ADD FOREIGN KEY (course_id) REFERENCES course(id),
+  ADD FOREIGN KEY (user_id) REFERENCES users(id);
+
+
+ALTER TABLE users
+  CHANGE COLUMN username email VARCHAR(255);
+  
