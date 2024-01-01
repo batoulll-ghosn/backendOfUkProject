@@ -8,7 +8,7 @@ const {
     uploadBytesResumable,
   } = require('firebase/storage');
   const storage = getStorage();
-  const getAllCourses = async (req, res) => {
+const getAllCourses = async (req, res) => {
     try {
       const [result] = await dbb.query(`SELECT * FROM course`);
       res.status(200).json({
@@ -24,27 +24,10 @@ const {
       });
     }
   };
-  const getAllCoursesByName = async (req, res) => {
+const getAllCoursesByName = async (req, res) => {
     try {
      const { languageName } = req.params;
      const [result] = await dbb.query(`SELECT * FROM course WHERE languageName='${languageName}'`);
-     res.status(200).json({
-       success: true,
-       message: "Courses data retrieved successfully",
-       data: result,
-     });
-    } catch (error) {
-     res.status(400).json({
-       success: false,
-       message: "Unable to get courses",
-       error,
-     });
-    }
-   };
-   const getAllCoursesByLevel = async (req, res) => {
-    try {
-     const { level } = req.params;
-     const [result] = await dbb.query(`SELECT * FROM course WHERE level='${level}'`);
      res.status(200).json({
        success: true,
        message: "Courses data retrieved successfully",
@@ -75,8 +58,25 @@ const {
      });
     }
    };
+const getAllCoursesByLevel = async (req, res) => {
+    try {
+     const { level } = req.params;
+     const [result] = await dbb.query(`SELECT * FROM course WHERE level='${level}'`);
+     res.status(200).json({
+       success: true,
+       message: "Courses data retrieved successfully",
+       data: result,
+     });
+    } catch (error) {
+     res.status(400).json({
+       success: false,
+       message: "Unable to get courses",
+       error,
+     });
+    }
+   };
 const AddCourse = async (req, res) => {
-    const { languageName, level, zoom_link } = req.body;
+    const { languageName, level, zoom_link,type} = req.body;
   
     try {
         const file = await FileUpload(req.file);
@@ -91,7 +91,7 @@ const AddCourse = async (req, res) => {
             });
         }
         const [result] = await dbb.query(
-            `INSERT INTO course(languageName, level, img, zoom_link) VALUES ('${languageName}','${level}','${img}','${zoom_link}')`
+            `INSERT INTO course(languageName, level, img, zoom_link,type) VALUES ('${languageName}','${level}','${img}','${zoom_link}','${type}')`
         );
   
         res.status(200).json({
@@ -103,17 +103,17 @@ const AddCourse = async (req, res) => {
         res.status(400).json({
             success: false,
             message: "Unfortunately, Unable to Add New Course",
-            error,
+            error:error.toString(),
         });
     }
   };
 const UpdateCourse = async (req, res) => {
-    const { languageName, level, zoom_link } = req.body;
+    const { languageName, level, zoom_link,type } = req.body;
     const id=req.params.id;
     try {
         const [oldCourse] = await dbb.query(`SELECT * FROM course WHERE id=${id}`);
-        const oldImg = oldCourse.img;
-    
+        const oldImg = oldCourse[0].img;
+        console.log(oldCourse[0]);
         let newImg;
         if (req.file) {
             const file = await FileUpload(req.file);
@@ -133,7 +133,7 @@ const UpdateCourse = async (req, res) => {
         }
    
         const [result] = await dbb.query(
-            `UPDATE course SET languageName='${languageName}', level='${level}', img='${newImg}', zoom_link='${zoom_link}' WHERE id=${id}`
+            `UPDATE course SET languageName='${languageName}', level='${level}', img='${newImg}', zoom_link='${zoom_link}',type='${type}' WHERE id=${id}`
         );
    
         res.status(200).json({
@@ -145,7 +145,7 @@ const UpdateCourse = async (req, res) => {
         res.status(400).json({
             success: false,
             message: "Unfortunately, Unable to Update Course",
-            error,
+            error:error.toString(),
         });
     }
    };

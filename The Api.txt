@@ -19,3 +19,9 @@ getAllByLanguageLevel:http://localhost:8000/courses/getByLanguageLevel/:level
 addCourse:http://localhost:8000/courses/AddCourse
 updateCourse:http://localhost:8000/courses/EditCourse/:id
 deleteCourse:http://localhost:8000/courses/deleteCourse/:id
+
+#CONFRENCES 
+getAll: http://localhost:8000/confrences/getAll
+getAllByConferenceName:http://localhost:8000/confrences/getByConferenceName/:conference_name
+addConference: http://localhost:8000/confrences/AddConference
+editConference: http://localhost:8000/confrences/EditConference/:id
