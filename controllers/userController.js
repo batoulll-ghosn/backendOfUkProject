@@ -24,6 +24,74 @@ const getAllUsers = async (req, res) => {
     });
   }
 };
+const getAllUsersByRole = async (req, res) => {
+    try {
+    const { role } = req.params;
+    const [result] = await dbb.query(`SELECT * FROM users WHERE role='${role}'`);
+    res.status(200).json({
+      success: true,
+      message: "Users data retrieved successfully",
+      data: result,
+    });
+    } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: "Unable to get users",
+      error,
+    });
+    }
+   };
+const getAllUsersByFullName = async (req, res) => {
+    try {
+    const { fullName } = req.params;
+    const [result] = await dbb.query(`SELECT * FROM users WHERE fullName='${fullName}'`);
+    res.status(200).json({
+      success: true,
+      message: "Users data retrieved successfully",
+      data: result,
+    });
+    } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: "Unable to get users",
+      error,
+    });
+    }
+   };
+const getAllUsersActive = async (req, res) => {
+    try {
+    const active  = 1;
+    const [result] = await dbb.query(`SELECT * FROM users WHERE active=${active}`);
+    res.status(200).json({
+     success: true,
+     message: "Users data retrieved successfully",
+     data: result,
+    });
+    } catch (error) {
+    res.status(400).json({
+     success: false,
+     message: "Unable to get users",
+     error,
+    });
+    }
+   };
+   const getAllUsersNonActive = async (req, res) => {
+    try {
+    const active  = 0;
+    const [result] = await dbb.query(`SELECT * FROM users WHERE active=${active}`);
+    res.status(200).json({
+     success: true,
+     message: "Users data retrieved successfully",
+     data: result,
+    });
+    } catch (error) {
+    res.status(400).json({
+     success: false,
+     message: "Unable to get users",
+     error,
+    });
+    }
+   };
 const register = async (req, res) => {
     const { email, fullName, gender, password } = req.body;
     const role = "student";
@@ -234,10 +302,50 @@ const updateUser = async (req, res) => {
             });
         }
      };
-     
-     
-     
+
+const switchToActivateUser = async (req, res) => {
+        const userId = req.params.id;
+      
+        try {
+            const [result] = await dbb.query(
+                `UPDATE users SET active = 1 WHERE id = ?`,
+                [userId]
+            );
+      
+            res.status(200).json({
+                success: true,
+                message: 'User activated successfully',
+            });
+        } catch (error) {
+            res.status(400).json({
+                success: false,
+                message: 'Unable to activate user',
+                error,
+            });
+        }
+      };
+const switchToNonActivateUser = async (req, res) => {
+        const userId = req.params.id;
+      
+        try {
+            const [result] = await dbb.query(
+                `UPDATE users SET active = 0 WHERE id = ?`,
+                [userId]
+            );
+      
+            res.status(200).json({
+                success: true,
+                message: 'User activated successfully',
+            });
+        } catch (error) {
+            res.status(400).json({
+                success: false,
+                message: 'Unable to activate user',
+                error,
+            });
+        }
+      };
       
       
 module.exports = {
-    getAllUsers,register,loginUser,deleteUser,updateUser}
+    getAllUsers,getAllUsersByRole,switchToActivateUser,switchToNonActivateUser,getAllUsersActive,getAllUsersNonActive,getAllUsersByFullName,register,loginUser,deleteUser,updateUser}
