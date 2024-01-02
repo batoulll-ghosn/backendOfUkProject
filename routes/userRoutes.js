@@ -7,6 +7,7 @@ router.get("/getAll", control.getAllUsers);
 router.get("/getAllActiveUsers", control.getAllUsersActive);
 router.get("/getAllNonActiveUsers", control.getAllUsersNonActive);
 router.get("/getUsersByRole/:role", control.getAllUsersByRole);
+router.get("/getUserByEmail/:email", control.getUsersByEmail);
 router.get("/getUserByFullName/:fullName", control.getAllUsersByFullName);
 router.post('/register',upload.single('img'), control.register);
 router.put('/editUser/:id',upload.single('img'), control.updateUser);

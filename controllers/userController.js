@@ -58,6 +58,23 @@ const getAllUsersByFullName = async (req, res) => {
     });
     }
    };
+const getUsersByEmail = async (req, res) => {
+    try {
+    const { email } = req.params;
+    const [result] = await dbb.query(`SELECT * FROM users WHERE email='${email}'`);
+    res.status(200).json({
+      success: true,
+      message: "Users data retrieved successfully",
+      data: result,
+    });
+    } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: "Unable to get users",
+      error,
+    });
+    }
+   };
 const getAllUsersActive = async (req, res) => {
     try {
     const active  = 1;
@@ -348,4 +365,4 @@ const switchToNonActivateUser = async (req, res) => {
       
       
 module.exports = {
-    getAllUsers,getAllUsersByRole,switchToActivateUser,switchToNonActivateUser,getAllUsersActive,getAllUsersNonActive,getAllUsersByFullName,register,loginUser,deleteUser,updateUser}
+    getAllUsers,getAllUsersByRole,getUsersByEmail,switchToActivateUser,switchToNonActivateUser,getAllUsersActive,getAllUsersNonActive,getAllUsersByFullName,register,loginUser,deleteUser,updateUser}
