@@ -3,6 +3,7 @@ getAll: http://localhost:8000/users/getAll
 getAllActiveUsers: http://localhost:8000/users/getAllActiveUsers
 getAllNonActiveUsers: http://localhost:8000/users/getAllNonActiveUsers
 getUsersByRole: http://localhost:8000/users/getUsersByRole/:role
+getUsersByEmail: http://localhost:8000/users/getUserByEmail/:email
 getUsersByfullName:http://localhost:8000/users/getUserByFullName/:fullName
 register:http://localhost:8000/users/register
 login:http://localhost:8000/users/login
