@@ -110,14 +110,14 @@ const getAllUsersActive = async (req, res) => {
     }
    };
 const register = async (req, res) => {
-    const { email, fullName, gender, password } = req.body;
+    const { email, fullName, phone, password } = req.body;
     const role = "student";
     const active = "1";
-    if (!email || !fullName || !gender || !password) {
+    if (!email || !fullName || !phone || !password) {
         return res.status(400).json({
             success: false,
             message: "All fields must be filled",
-            missingFields: [!email && 'email', !fullName && 'fullName', !gender && 'gender', !password && 'password'].filter(Boolean)
+            missingFields: [!email && 'email', !fullName && 'fullName', !phone && 'phone', !password && 'password'].filter(Boolean)
         });
     }
     const passwordStrength = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
@@ -131,12 +131,6 @@ const register = async (req, res) => {
         return res.status(400).json({
             success: false,
             message: "Must be a valid email"
-        });
-    }
-    if (gender !== "male" && gender !== "female") {
-        return res.status(400).json({
-            success: false,
-            message: "Gender must be either male or female"
         });
     }
     const [emailExists] = await dbb.query(
@@ -155,7 +149,7 @@ const register = async (req, res) => {
         const file = await FileUpload(req.file);
         const img = file.downloadURL;
         const [result] = await dbb.query(
-            `INSERT INTO users(email, fullName, img, gender, role, created_at, active, password) VALUES ("${email}", "${fullName}", "${img}", "${gender}", "${role}", NOW(), "${active}", "${hashedPassword}")`
+            `INSERT INTO users(email, fullName, img, phone, role, created_at, active, password) VALUES ("${email}", "${fullName}", "${img}", "${phone}", "${role}", NOW(), "${active}", "${hashedPassword}")`
         );
         res.status(200).json({
             success: true,
