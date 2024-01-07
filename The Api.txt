@@ -26,3 +26,6 @@ getAll: http://localhost:8000/confrences/getAll
 getAllByConferenceName:http://localhost:8000/confrences/getByConferenceName/:conference_name
 addConference: http://localhost:8000/confrences/AddConference
 editConference: http://localhost:8000/confrences/EditConference/:id
+
+#WORKSHOPS
+getAll: http://localhost:8000/workshops/getAll
