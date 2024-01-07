@@ -25,7 +25,7 @@ const getAllConfrences = async (req, res) => {
     }
   };
   const AddConference = async (req, res) => {
-    const { conference_name, type, date, img} = req.body;
+    const { conference_name, type, date,price, description} = req.body;
   
     try {
         const file = await FileUpload(req.file);
@@ -40,7 +40,7 @@ const getAllConfrences = async (req, res) => {
             });
         }
         const [result] = await dbb.query(
-            `INSERT INTO confrences(conference_name, type, date, img) VALUES ('${conference_name}','${type}','${date}','${img}}')`
+            `INSERT INTO confrences(conference_name, type, date, img, price, description) VALUES ('${conference_name}','${type}','${date}','${img}','${price}','${description}')`
         );
   
         res.status(200).json({
@@ -98,7 +98,7 @@ const FileUpload = async (file) => {
       return dateTime;
     };
 const UpdateConference = async (req, res) => {
-        const { conference_name, type, date} = req.body;
+        const { conference_name, type, date,price, description} = req.body;
         const id=req.params.id;
         try {
             const oldCourse = await dbb.query(`SELECT * FROM confrences WHERE id=${id}`);
@@ -123,7 +123,7 @@ const UpdateConference = async (req, res) => {
             }
        
             const [result] = await dbb.query(
-                `UPDATE confrences SET conference_name='${conference_name}', type='${type}', date='${date}',img='${newImg}'  WHERE id=${id}`
+                `UPDATE confrences SET conference_name='${conference_name}', type='${type}', date='${date}',img='${newImg}',price='${price}', description='${description}'  WHERE id=${id}`
             );
        
             res.status(200).json({
