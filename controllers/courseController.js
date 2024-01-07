@@ -76,7 +76,7 @@ const getAllCoursesByLevel = async (req, res) => {
     }
    };
 const AddCourse = async (req, res) => {
-    const { languageName, level, zoom_link,type} = req.body;
+    const { languageName, level, zoom_link,type,price} = req.body;
   
     try {
         const file = await FileUpload(req.file);
@@ -91,7 +91,7 @@ const AddCourse = async (req, res) => {
             });
         }
         const [result] = await dbb.query(
-            `INSERT INTO course(languageName, level, img, zoom_link,type) VALUES ('${languageName}','${level}','${img}','${zoom_link}','${type}')`
+            `INSERT INTO course(languageName, level, img, zoom_link,type,price) VALUES ('${languageName}','${level}','${img}','${zoom_link}','${type}','${price})`
         );
   
         res.status(200).json({
@@ -133,7 +133,7 @@ const UpdateCourse = async (req, res) => {
         }
    
         const [result] = await dbb.query(
-            `UPDATE course SET languageName='${languageName}', level='${level}', img='${newImg}', zoom_link='${zoom_link}',type='${type}' WHERE id=${id}`
+            `UPDATE course SET languageName='${languageName}', level='${level}', img='${newImg}', zoom_link='${zoom_link}',type='${type}',price='${price}' WHERE id=${id}`
         );
    
         res.status(200).json({
