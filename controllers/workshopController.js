@@ -1,3 +1,4 @@
+const dbb = require("../config/connection");
 const getAllWorkshops = async (req, res) => {
     try {
       const [result] = await dbb.query(`SELECT * FROM workshops`);
@@ -10,7 +11,7 @@ const getAllWorkshops = async (req, res) => {
       res.status(400).json({
         success: false,
         message: "Unable to get Workshops",
-        error,
+        error:error.toString(),
       });
     }
   };
