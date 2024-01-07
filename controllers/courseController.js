@@ -108,7 +108,7 @@ const AddCourse = async (req, res) => {
     }
   };
 const UpdateCourse = async (req, res) => {
-    const { languageName, level, zoom_link,type } = req.body;
+    const { languageName, level, zoom_link,type,price } = req.body;
     const id=req.params.id;
     try {
         const [oldCourse] = await dbb.query(`SELECT * FROM course WHERE id=${id}`);
