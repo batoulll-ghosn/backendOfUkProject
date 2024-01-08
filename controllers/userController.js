@@ -164,6 +164,61 @@ const register = async (req, res) => {
         });
     }
  };
+const AddUser = async (req, res) => {
+  const { email, fullName, phone, password,role } = req.body;
+ 
+  const active = "1";
+  if (!email || !fullName || !phone || !password) {
+      return res.status(400).json({
+          success: false,
+          message: "All fields must be filled",
+          missingFields: [!email && 'email', !fullName && 'fullName', !phone && 'phone', !password && 'password'].filter(Boolean)
+      });
+  }
+  const passwordStrength = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+  if (!passwordStrength.test(password)) {
+      return res.status(400).json({
+          success: false,
+          message: "Password must be at least 8 characters long, include at least one number, one lowercase letter, one uppercase letter"
+      });
+  }
+  if (!validator.isEmail(email)) {
+      return res.status(400).json({
+          success: false,
+          message: "Must be a valid email"
+      });
+  }
+  const [emailExists] = await dbb.query(
+      `SELECT * FROM users WHERE email = ?`,
+      [email]
+  );
+ 
+  if (emailExists.length > 0) {
+      return res.status(400).json({
+          success: false,
+          message: 'This email is already in use',
+      });
+  }
+  const hashedPassword = await bcrypt.hash(password, 10);
+  try {
+      const file = await FileUpload(req.file);
+      const img = file.downloadURL;
+      const [result] = await dbb.query(
+          `INSERT INTO users(email, fullName, img, phone, role, created_at, active, password) VALUES ("${email}", "${fullName}", "${img}", "${phone}", "${role}", NOW(), "${active}", "${hashedPassword}")`
+      );
+      res.status(200).json({
+          success: true,
+          message: "Users data retrieved successfully",
+          data: result,
+      });
+  } catch (error) {
+      res.status(400).json({
+          success: false,
+          message: "Unable to get new user",
+          error,
+      });
+  }
+};
  const loginUser = async (req, res) => {
     const { Email, password } = req.body;
  
@@ -313,7 +368,7 @@ const updateUser = async (req, res) => {
             });
         }
      };
-     const AdminupdateUser = async (req, res) => {
+const AdminupdateUser = async (req, res) => {
       const { email, fullName } = req.body;
       const userId = req.params.id;
       try {
@@ -420,4 +475,4 @@ const switchToStudent = async (req, res) => {
       };     
       
 module.exports = {
-    getAllUsers,getAllUsersByRole,getUsersByEmail,AdminupdateUser,switchToTrainer,switchToStudent,switchToActivateUser,switchToNonActivateUser,getAllUsersActive,getAllUsersNonActive,getAllUsersByFullName,register,loginUser,deleteUser,updateUser}
+    getAllUsers,getAllUsersByRole,getUsersByEmail,AddUser,AdminupdateUser,switchToTrainer,switchToStudent,switchToActivateUser,switchToNonActivateUser,getAllUsersActive,getAllUsersNonActive,getAllUsersByFullName,register,loginUser,deleteUser,updateUser}
