@@ -6,6 +6,7 @@ getUsersByRole: http://localhost:8000/users/getUsersByRole/:role
 getUsersByEmail: http://localhost:8000/users/getUserByEmail/:email
 getUsersByfullName:http://localhost:8000/users/getUserByFullName/:fullName
 register:http://localhost:8000/users/register
+addUser:http://localhost:8000/users/addUser
 login:http://localhost:8000/users/login
 deleteUser:http://localhost:8000/users/deleteUser/:id
 updateUserInfo:http://localhost:8000/users/editUser/:id
