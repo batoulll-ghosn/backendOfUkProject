@@ -92,7 +92,7 @@ const getAllUsersActive = async (req, res) => {
     });
     }
    };
-   const getAllUsersNonActive = async (req, res) => {
+const getAllUsersNonActive = async (req, res) => {
     try {
     const active  = 0;
     const [result] = await dbb.query(`SELECT * FROM users WHERE active=${active}`);
@@ -238,7 +238,7 @@ const FileUpload = async (file) => {
       };
     };
     
- const giveCurrentDateTime = () => {
+const giveCurrentDateTime = () => {
       const today = new Date();
       const date =
         today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
@@ -313,7 +313,27 @@ const updateUser = async (req, res) => {
             });
         }
      };
-
+     const AdminupdateUser = async (req, res) => {
+      const { email, fullName } = req.body;
+      const userId = req.params.id;
+      try {
+        const [result] = await dbb.query(
+          `UPDATE users SET email = ?, fullName = ? WHERE id = ?`,
+          [email, fullName, userId]
+        );
+        res.status(200).json({
+          success: true,
+          message: 'Data updated successfully',
+        });
+      } catch (error) {
+        res.status(400).json({
+          success: false,
+          message: 'Unable to update data',
+          error,
+        });
+      }
+     };
+     
 const switchToActivateUser = async (req, res) => {
         const userId = req.params.id;
       
@@ -356,7 +376,48 @@ const switchToNonActivateUser = async (req, res) => {
             });
         }
       };
+const switchToTrainer = async (req, res) => {
+        const userId = req.params.id;
       
+        try {
+            const [result] = await dbb.query(
+                `UPDATE users SET role = trainer WHERE id = ?`,
+                [userId]
+            );
+      
+            res.status(200).json({
+                success: true,
+                message: 'User switched to trainer successfully',
+            });
+        } catch (error) {
+            res.status(400).json({
+                success: false,
+                message: 'Unable to switch to trainer',
+                error,
+            });
+        }
+      };
+const switchToStudent = async (req, res) => {
+        const userId = req.params.id;
+      
+        try {
+            const [result] = await dbb.query(
+                `UPDATE users SET role = student WHERE id = ?`,
+                [userId]
+            );
+      
+            res.status(200).json({
+                success: true,
+                message: 'User switched to student successfully',
+            });
+        } catch (error) {
+            res.status(400).json({
+                success: false,
+                message: 'Unable to switch to student',
+                error,
+            });
+        }
+      };     
       
 module.exports = {
-    getAllUsers,getAllUsersByRole,getUsersByEmail,switchToActivateUser,switchToNonActivateUser,getAllUsersActive,getAllUsersNonActive,getAllUsersByFullName,register,loginUser,deleteUser,updateUser}
+    getAllUsers,getAllUsersByRole,getUsersByEmail,AdminupdateUser,switchToTrainer,switchToStudent,switchToActivateUser,switchToNonActivateUser,getAllUsersActive,getAllUsersNonActive,getAllUsersByFullName,register,loginUser,deleteUser,updateUser}
