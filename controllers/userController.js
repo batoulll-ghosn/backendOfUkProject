@@ -436,7 +436,7 @@ const switchToTrainer = async (req, res) => {
       
         try {
             const [result] = await dbb.query(
-                `UPDATE users SET role = trainer WHERE id = ?`,
+                `UPDATE users SET role = "trainer" WHERE id = ?`,
                 [userId]
             );
       
@@ -457,7 +457,7 @@ const switchToStudent = async (req, res) => {
       
         try {
             const [result] = await dbb.query(
-                `UPDATE users SET role = student WHERE id = ?`,
+                `UPDATE users SET role = "student" WHERE id = ?`,
                 [userId]
             );
       
