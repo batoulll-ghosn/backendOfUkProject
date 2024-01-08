@@ -1,6 +1,6 @@
 const dbb = require("../config/connection");
 const EngageToConf = async (req, res) => {
-    const { confrence_id, user_id} = req.body;
+    const {confrence_id, user_id} = req.body;
   
     try {
         const [result] = await dbb.query(
