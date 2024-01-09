@@ -1,7 +1,7 @@
 const dbb = require("../config/connection");
 const EngageToConf = async (req, res) => {
-   const {confrence_id, user_id, paid} = req.body;
- 
+   const {confrence_id, user_id} = req.body;
+  const paid ='0'
    try {
        // Check if a row with the given user_id and conference_id already exists
        const [existingRow] = await dbb.query(
