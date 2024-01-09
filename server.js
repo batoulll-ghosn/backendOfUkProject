@@ -14,12 +14,15 @@ const userRoutes = require("./routes/userRoutes");
 const courseRoutes = require("./routes/courseRoutes");
 const confrencesRoutes=require("./routes/confrencesRoutes");
 const workshopsRoutes=require("./routes/workshopsRoutes");
-const engagedtoconfrenceRoutes=require("./routes/engageToConf")
+const engagedtoconfrenceRoutes=require("./routes/engageToConf");
+const emailRoute = require('./routes/emailRoutes');
 app.use("/users", userRoutes);
 app.use("/courses",courseRoutes);
 app.use("/confrences",confrencesRoutes);
 app.use("/workshops",workshopsRoutes);
-app.use("/EngaConference",engagedtoconfrenceRoutes)
+app.use("/EngaConference",engagedtoconfrenceRoutes);
+app.use('/email', emailRoute);
+
 app.listen(8000,()=>{
    console.log('server is running on port:8000')
 })
