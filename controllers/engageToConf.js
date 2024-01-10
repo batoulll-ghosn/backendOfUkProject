@@ -29,7 +29,7 @@ const EngageToConf = async (req, res) => {
   };
   
 const getEnngagedConfWhereUser = async (req, res) => {
-    const {user_id} = req.body;
+    const {user_id} = req.params;
     try {
       const [result] = await dbb.query(`SELECT confrences.*, engagedtoconfrence.paid, engagedtoconfrence.user_id
       FROM confrences 
