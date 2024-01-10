@@ -41,7 +41,7 @@ const getAllCoursesByName = async (req, res) => {
      });
     }
    };
-   const getAllCoursesByType = async (req, res) => {
+const getAllCoursesByType = async (req, res) => {
     try {
      const { type } = req.params;
      const [result] = await dbb.query(`SELECT * FROM course WHERE type='${type}'`);
@@ -149,9 +149,7 @@ const UpdateCourse = async (req, res) => {
         });
     }
    };
-   
- 
- const FileUpload = async (file) => {
+const FileUpload = async (file) => {
     const dateTime = giveCurrentDateTime();
     
       const storageRef = ref(
@@ -182,9 +180,8 @@ const UpdateCourse = async (req, res) => {
         type: file.mimetype,
         downloadURL: downloadURL,
       };
-    };
-    
- const giveCurrentDateTime = () => {
+    };   
+const giveCurrentDateTime = () => {
       const today = new Date();
       const date =
         today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
@@ -193,7 +190,7 @@ const UpdateCourse = async (req, res) => {
       const dateTime = date + ' ' + time;
       return dateTime;
     };
-    const deleteCourse = async (req, res) => {
+const deleteCourse = async (req, res) => {
         try {
           const [result] = await dbb.query(`DELETE FROM course WHERE id = ?`, [
             req.params.id,
@@ -211,5 +208,32 @@ const UpdateCourse = async (req, res) => {
           });
         }
       };
-    module.exports = {
-       AddCourse,UpdateCourse,deleteCourse,getAllCourses,getAllCoursesByType,getAllCoursesByName,getAllCoursesByLevel}
+const EngageToCourse = async (req, res) => {
+        const {course_id, user_id} = req.body;
+        const paid =0
+        try {
+            const [existingRow] = await dbb.query(
+                `SELECT * FROM enrolledtocourse WHERE course_id='${course_id}' AND user_id='${user_id}'`
+            );
+            
+            if (existingRow.length > 0) {
+                throw new Error("You have already submitted to this course.");
+            } else {
+                const [result] = await dbb.query(
+                    `INSERT INTO enrolledtocourse(course_id, user_id, paid) VALUES ('${course_id}','${user_id}','${paid}')`
+                );
+                res.status(200).json({
+                    success: true,
+                    message: "Engagement to course was successful",
+                    data: result,
+                });
+            }
+        } catch (error) {
+            res.status(400).json({
+                success: false,
+                message: "Engagement to conference was not successful",
+                error: error.toString(),
+            });
+        }
+      };
+module.exports = {AddCourse,UpdateCourse,deleteCourse,EngageToCourse,getAllCourses,getAllCoursesByType,getAllCoursesByName,getAllCoursesByLevel}
