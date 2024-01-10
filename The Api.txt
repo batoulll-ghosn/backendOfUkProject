@@ -34,6 +34,7 @@ editConference: http://localhost:8000/confrences/EditConference/:id
 
 #WORKSHOPS
 getAll: http://localhost:8000/workshops/getAll
+EngageToWorkshop: http://localhost:8000/workshops/engageToWorshop
 
 #ENGAGED TO CONFRENCES
 post: http://localhost:8000/EngaConference/engageToConference
