@@ -22,6 +22,10 @@ addCourse:http://localhost:8000/courses/AddCourse
 updateCourse:http://localhost:8000/courses/EditCourse/:id
 deleteCourse:http://localhost:8000/courses/deleteCourse/:id
 
+#ENGAGE TO COURSE 
+addCourse:http://localhost:8000/courses/EngageToCourse
+
+
 #CONFRENCES 
 getAll: http://localhost:8000/confrences/getAll
 getAllByConferenceName:http://localhost:8000/confrences/getByConferenceName/:conference_name
