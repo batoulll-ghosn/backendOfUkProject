@@ -33,6 +33,7 @@ getAll: http://localhost:8000/workshops/getAll
 
 #ENGAGED TO CONFRENCES
 post: http://localhost:8000/EngaConference/engageToConference
+get :  http://localhost:8000/EngaConference/getEngagedConf
 
 #EMAIL 
 post: http://localhost:8000/email/send
