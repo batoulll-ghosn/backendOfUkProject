@@ -17,7 +17,7 @@ const getAllWorkshops = async (req, res) => {
   };
 const EngageToWorkshop = async (req, res) => {
     const {workshop_id, user_id} = req.body;
-    const paid =0
+    const paid = 1 ;
     try {
         const [existingRow] = await dbb.query(
             `SELECT * FROM engagedtoworkshop WHERE workshop_id='${workshop_id}' AND user_id='${user_id}'`
