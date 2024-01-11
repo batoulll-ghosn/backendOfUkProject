@@ -43,7 +43,7 @@ const EngageToWorkshop = async (req, res) => {
         });
     }
   };
-  const getEngagedWorkshopWhereUser = async (req, res) => {
+const getEngagedWorkshopWhereUser = async (req, res) => {
     const {user_id} = req.params;
     try {
       const [result] = await dbb.query(`SELECT workshops.*, engagedtoworkshop.workshop_id, engagedtoworkshop.paid

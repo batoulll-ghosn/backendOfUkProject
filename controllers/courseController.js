@@ -236,4 +236,26 @@ const EngageToCourse = async (req, res) => {
             });
         }
       };
-module.exports = {AddCourse,UpdateCourse,deleteCourse,EngageToCourse,getAllCourses,getAllCoursesByType,getAllCoursesByName,getAllCoursesByLevel}
+const getEngagedCourseWhereUser = async (req, res) => {
+        const {user_id} = req.params;
+        try {
+          const [result] = await dbb.query(`SELECT course.*, enrolledtocourse.course_id, enrolledtocourse.user_id, scheduletocourse.*
+          FROM course 
+            LEFT JOIN enrolledtocourse ON enrolledtocourse.course_id = course.id 
+            LEFT JOIN scheduletocourse ON scheduletocourse.course_id = course.id
+          WHERE enrolledtocourse.user_id = ?`, [user_id]);
+          res.status(200).json({
+            success: true,
+            message: "Course Schedule data retrieved successfully",
+            data: result,
+          });
+        } catch (error) {
+          res.status(400).json({
+            success: false,
+            message: "Unable to get the Course Schedule",
+            error,
+          });
+        }
+       };
+       
+module.exports = {AddCourse,UpdateCourse,deleteCourse, getEngagedCourseWhereUser,EngageToCourse,getAllCourses,getAllCoursesByType,getAllCoursesByName,getAllCoursesByLevel}
