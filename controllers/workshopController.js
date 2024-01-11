@@ -15,7 +15,7 @@ const getAllWorkshops = async (req, res) => {
       });
     }
   };
-  const EngageToWorkshop = async (req, res) => {
+const EngageToWorkshop = async (req, res) => {
     const {workshop_id, user_id} = req.body;
     const paid =0
     try {
@@ -43,4 +43,25 @@ const getAllWorkshops = async (req, res) => {
         });
     }
   };
-  module.exports={getAllWorkshops,EngageToWorkshop}
+  const getEngagedWorkshopWhereUser = async (req, res) => {
+    const {user_id} = req.params;
+    try {
+      const [result] = await dbb.query(`SELECT workshops.*, engagedtoworkshop.workshop_id, engagedtoworkshop.paid
+      FROM workshops 
+        LEFT JOIN engagedtoworkshop ON engagedtoworkshop.workshop_id = workshops.id
+      WHERE engagedtoworkshop.workshop_id = ? AND engagedtoworkshop.paid = '1';`, [user_id]);
+      res.status(200).json({
+        success: true,
+        message: "Workshop data retrieved successfully",
+        data: result,
+      });
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        message: "Unable to get the Workshop",
+        error,
+      });
+    }
+ };
+ 
+module.exports={getAllWorkshops,EngageToWorkshop,getEngagedWorkshopWhereUser}
