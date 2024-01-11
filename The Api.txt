@@ -45,3 +45,4 @@ get :  http://localhost:8000/EngaConference/getEngagedConf
 post: http://localhost:8000/email/send
 https://ukbackendproject.onrender.com/email/registerToConf
 
+/courses/getEngagedCourseSchedule/:user_id
