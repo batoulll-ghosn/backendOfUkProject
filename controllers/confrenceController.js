@@ -156,4 +156,22 @@ const getAllConferenceByName = async (req, res) => {
          });
         }
        };
-module.exports={getAllConfrences,getAllConferenceByName,AddConference,UpdateConference}
+const deleteConf = async (req, res) => {
+        try {
+          const [result] = await dbb.query(`DELETE FROM confrences WHERE id = ?`, [
+            req.params.id,
+          ]);
+          res.status(200).json({
+            success: true,
+            message: 'Data deleted successfully',
+            data: result,
+          });
+        } catch (error) {
+          res.status(400).json({
+            success: false,
+            message: 'Unable to delete data',
+            error,
+          });
+        }
+      };
+module.exports={getAllConfrences,getAllConferenceByName,AddConference,UpdateConference,deleteConf}
