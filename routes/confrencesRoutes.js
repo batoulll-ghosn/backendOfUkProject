@@ -7,4 +7,5 @@ router.get("/getAll", control.getAllConfrences);
 router.get("/getByConferenceName/:conference_name", control.getAllConferenceByName);
 router.post('/AddConference',upload.single('img'), control.AddConference);
 router.put('/EditConference/:id',upload.single('img'),control.UpdateConference);
+router.delete('/deleteConf/:id',control.deleteConf);
 module.exports = router;
