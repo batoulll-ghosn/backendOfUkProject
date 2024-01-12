@@ -98,7 +98,7 @@ const FileUpload = async (file) => {
       return dateTime;
     };
 const UpdateConference = async (req, res) => {
-        const { conference_name, type, date,price, description} = req.body;
+        const { conference_name, type, date,price, description,zoom_link,resources} = req.body;
         const id=req.params.id;
         try {
             const oldCourse = await dbb.query(`SELECT * FROM confrences WHERE id=${id}`);
@@ -123,7 +123,7 @@ const UpdateConference = async (req, res) => {
             }
        
             const [result] = await dbb.query(
-                `UPDATE confrences SET conference_name='${conference_name}', type='${type}', date='${date}',img='${newImg}',price='${price}', description='${description}'  WHERE id=${id}`
+                `UPDATE confrences SET conference_name='${conference_name}', type='${type}', date='${date}',img='${newImg}',price='${price}', description='${description}',zoom_link='${zoom_link}',resources='${resources}'  WHERE id=${id}`
             );
        
             res.status(200).json({
