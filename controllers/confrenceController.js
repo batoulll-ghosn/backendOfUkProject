@@ -25,7 +25,7 @@ const getAllConfrences = async (req, res) => {
     }
   };
   const AddConference = async (req, res) => {
-    const { conference_name, type, date,price, description,zoom_link} = req.body;
+    const { conference_name, type, date,price, description,zoom_link,resources} = req.body;
     const abv="con"
     try {
         const file = await FileUpload(req.file);
@@ -40,7 +40,7 @@ const getAllConfrences = async (req, res) => {
             });
         }
         const [result] = await dbb.query(
-            `INSERT INTO confrences(conference_name, type, date, img, price, description,zoom_link,abv) VALUES ('${conference_name}','${type}','${date}','${img}','${price}','${description}','${zoom_link}','${abv}')`
+            `INSERT INTO confrences(conference_name, type, date, img, price, description,abv,zoom_link,resources) VALUES ('${conference_name}','${type}','${date}','${img}','${price}','${description}','${abv}','${zoom_link}','${resources}')`
         );
   
         res.status(200).json({
