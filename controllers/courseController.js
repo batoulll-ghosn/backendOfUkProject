@@ -77,7 +77,7 @@ const getAllCoursesByLevel = async (req, res) => {
    };
 const AddCourse = async (req, res) => {
     const { languageName, level, zoom_link,type,price} = req.body;
-  
+    const abv="co"
     try {
         const file = await FileUpload(req.file);
         const img = file.downloadURL;
@@ -91,7 +91,7 @@ const AddCourse = async (req, res) => {
             });
         }
         const [result] = await dbb.query(
-            `INSERT INTO course(languageName, level, img, zoom_link,type,price) VALUES ('${languageName}','${level}','${img}','${zoom_link}','${type}','${price})`
+            `INSERT INTO course(languageName, level, img, zoom_link,type,price,abv) VALUES ('${languageName}','${level}','${img}','${zoom_link}','${type}','${price}','${abv}')`
         );
   
         res.status(200).json({
