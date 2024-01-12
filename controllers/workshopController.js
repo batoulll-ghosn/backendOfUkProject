@@ -48,8 +48,8 @@ const getEngagedWorkshopWhereUser = async (req, res) => {
     try {
       const [result] = await dbb.query(`SELECT workshops.*, engagedtoworkshop.workshop_id, engagedtoworkshop.paid
       FROM workshops 
-        LEFT JOIN engagedtoworkshop ON engagedtoworkshop.workshop_id = workshops.id
-      WHERE engagedtoworkshop.workshop_id = ? AND engagedtoworkshop.paid = '1';`, [user_id]);
+     JOIN engagedtoworkshop ON engagedtoworkshop.workshop_id = workshops.id
+      WHERE engagedtoworkshop.paid = '1';`, [user_id]);
       res.status(200).json({
         success: true,
         message: "Workshop data retrieved successfully",
