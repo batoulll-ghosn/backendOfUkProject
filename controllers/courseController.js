@@ -278,5 +278,38 @@ const getEngagedCourseWhereUser = async (req, res) => {
           });
         }
       };
-       
-module.exports = {AddCourse,UpdateCourse,deleteCourse,getSchedule, getEngagedCourseWhereUser,EngageToCourse,getAllCourses,getAllCoursesByType,getAllCoursesByName,getAllCoursesByLevel}
+      const AddSchedule = async (req, res) => {
+        try {
+          const { course_id, day, hour } = req.params;
+          const existingSchedule = await dbb.query(
+            "SELECT * FROM `scheduletocourse` WHERE `day` = ? AND `hour` = ?",
+            [course_id, day, hour]
+          );
+      
+          if (existingSchedule.length > 0) {
+            return res.status(400).json({
+              success: false,
+              message: "Schedule already exists for the specified course, day, and hour",
+            });
+          }
+      
+          const [result] = await dbb.query(
+            "INSERT INTO `scheduletocourse` (`course_id`, `day`, `hour`) VALUES (?, ?, ?)",
+            [course_id, day, hour]
+          );
+      
+          res.status(200).json({
+            success: true,
+            message: "Schedule added successfully",
+            data: result,
+          });
+        } catch (error) {
+          res.status(500).json({
+            success: false,
+            message: "Unable to add schedule",
+            error: error.message,
+          });
+        }
+      };
+      
+module.exports = {AddCourse,AddSchedule,UpdateCourse,deleteCourse,getSchedule, getEngagedCourseWhereUser,EngageToCourse,getAllCourses,getAllCoursesByType,getAllCoursesByName,getAllCoursesByLevel}

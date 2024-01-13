@@ -20,8 +20,11 @@ getAllByType:http://localhost:8000/courses/getByType/:type
 getAllByLanguageLevel:http://localhost:8000/courses/getByLanguageLevel/:level
 addCourse:http://localhost:8000/courses/AddCourse
 updateCourse:http://localhost:8000/courses/EditCourse/:id
-deleteCourse:http://localhost:8000/courses/deleteCourse/:id
-https://ukbackendproject.onrender.com/courses/getSchedule
+deleteCourse: http://localhost:8000/courses/deleteCourse/:id
+getSchedule: https://ukbackendproject.onrender.com/courses/getSchedule
+AddSchedule:https://ukbackendproject.onrender.com/courses/AddSchedule
+
+
 #ENGAGE TO COURSE 
 addCourse:http://localhost:8000/courses/EngageToCourse
 
