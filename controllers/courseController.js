@@ -257,12 +257,14 @@ const getEngagedCourseWhereUser = async (req, res) => {
           });
         }
        };
-const getSchedule = async (req, res) => {
+       const getSchedule = async (req, res) => {
         try {
-          const [result] = await dbb.query(`SELECT course.*, enrolledtocourse.course_id, enrolledtocourse.user_id, scheduletocourse.*
-          FROM course 
-            LEFT JOIN enrolledtocourse ON enrolledtocourse.course_id = course.id 
-            LEFT JOIN scheduletocourse ON scheduletocourse.course_id = course.id`);
+          const [result] = await dbb.query(`
+            SELECT scheduletocourse.*, course.languageName, course.level, course.zoom_link
+            FROM scheduletocourse
+            LEFT JOIN course ON scheduletocourse.course_id = course.id;
+          `);
+      
           res.status(200).json({
             success: true,
             message: "Courses Schedule data retrieved successfully",
@@ -275,5 +277,6 @@ const getSchedule = async (req, res) => {
             error,
           });
         }
-       };    
+      };
+       
 module.exports = {AddCourse,UpdateCourse,deleteCourse,getSchedule, getEngagedCourseWhereUser,EngageToCourse,getAllCourses,getAllCoursesByType,getAllCoursesByName,getAllCoursesByLevel}
