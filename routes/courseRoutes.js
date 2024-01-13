@@ -11,5 +11,6 @@ router.post('/EngageToCourse',control.EngageToCourse);
 router.post('/AddCourse',upload.single('img'), control.AddCourse);
 router.put('/EditCourse/:id',upload.single('img'),control.UpdateCourse);
 router.get('/getEngagedCourseSchedule/:user_id', control.getEngagedCourseWhereUser);
+router.get('/getSchedule', control.getSchedule);
 router.delete('/deleteCourse/:id',control.deleteCourse);
 module.exports = router;
