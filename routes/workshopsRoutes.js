@@ -7,4 +7,5 @@ router.get("/getAll", control.getAllWorkshops);
 router.get('/getEngagedWorkshops/:user_id', control.getEngagedWorkshopWhereUser);
 router.post("/engageToWorshop", control.EngageToWorkshop);
 router.post('/AddWorkshop',upload.single('img'), control.AddWorkshop);
+router.delete('/deleteWorkshop/:id',control.DeleteWorkshop);
 module.exports = router;
