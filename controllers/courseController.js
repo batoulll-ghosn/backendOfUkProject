@@ -278,18 +278,33 @@ const getSchedule = async (req, res) => {
           });
         }
       };
-const AddSchedule = async (req, res) => {
-        const {course_id,day,hour} = req.params;
+      const AddSchedule = async (req, res) => {
+        const { course_id, day, hour } = req.params;
         try {
-            const [result] = await dbb.query(
-              `INSERT INTO scheduletocourse(course_id,day,hour) VALUES ('${course_id}','${day}','${hour}')`
+            // Check if the schedule already exists
+            const [existingSchedule] = await dbb.query(
+                `SELECT * FROM scheduletocourse WHERE  day = '${day}' AND hour = '${hour}'`
             );
-      
-            res.status(200).json({
-                success: true,
-                message: "Course Data Added successfully",
-                data: result,
-            });
+    
+            if (existingSchedule.length > 0) {
+                // If schedule already exists, return a response indicating the conflict
+                res.status(409).json({
+                    success: false,
+                    message: "Schedule already exists for the given day and hour.",
+                    data: existingSchedule,
+                });
+            } else {
+                // If schedule doesn't exist, insert the new schedule
+                const [result] = await dbb.query(
+                    `INSERT INTO scheduletocourse(course_id,day,hour) VALUES ('${course_id}','${day}','${hour}')`
+                );
+    
+                res.status(200).json({
+                    success: true,
+                    message: "Course Data Added successfully",
+                    data: result,
+                });
+            }
         } catch (error) {
             res.status(400).json({
                 success: false,
@@ -297,7 +312,8 @@ const AddSchedule = async (req, res) => {
                 error,
             });
         }
-      };
+    };
+    
 const DeleteSchedule = async (req, res) => { 
             try {
               const [result] = await dbb.query(`DELETE FROM scheduletocourse WHERE id = ?`, [
