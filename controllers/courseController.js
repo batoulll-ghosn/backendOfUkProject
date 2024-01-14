@@ -279,10 +279,7 @@ const getSchedule = async (req, res) => {
         }
       };
 const AddSchedule = async (req, res) => {
-        const {course_id,day,hour} = req.body;
-        console.log(course_id)
-        console.log(day)
-        console.log(hour)
+        const {course_id,day,hour} = req.params;
         try {
             const [result] = await dbb.query(
               `INSERT INTO scheduletocourse(course_id,day,hour) VALUES ('${course_id}','${day}','${hour}')`
