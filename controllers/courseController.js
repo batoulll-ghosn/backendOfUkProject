@@ -279,15 +279,10 @@ const getEngagedCourseWhereUser = async (req, res) => {
         }
       };
 const AddSchedule = async (req, res) => { 
-  const {course_id, day, hour} = req.body;
+  const {course_id} = req.body.course_id;
+  const {day, hour} = req.body;
       try {
          
-          if (!course_id || !day || !hour) {
-            return res.status(400).json({
-              success: false,
-              message: "Missing required fields in the request body",
-            });
-          }
           const [result] = await dbb.query(
             `INSERT INTO scheduletocourse(course_id,day,hour) VALUES ('${course_id}','${day}','${hour}')`);
       
