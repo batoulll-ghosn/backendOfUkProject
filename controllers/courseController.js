@@ -278,7 +278,7 @@ const getSchedule = async (req, res) => {
           });
         }
       };
-      const AddSchedule = async (req, res) => {
+const AddSchedule = async (req, res) => {
         const { course_id, day, hour } = req.params;
         try {
             // Check if the schedule already exists

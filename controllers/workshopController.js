@@ -63,5 +63,36 @@ const getEngagedWorkshopWhereUser = async (req, res) => {
       });
     }
  };
- 
-module.exports={getAllWorkshops,EngageToWorkshop,getEngagedWorkshopWhereUser}
+ const AddWorkshop = async (req, res) => {
+  const { workshopname, type, date,price,zoom_link} = req.body;
+  const abv="w"
+  try {
+      const file = await FileUpload(req.file);
+      const img = file.downloadURL;
+      const checkQuery = `SELECT COUNT(*) as count FROM workshops WHERE workshopname='${workshopname}'`;
+      const [countResult] = await dbb.query(checkQuery);
+
+      if (countResult[0].count > 0) {
+          return res.status(400).json({
+              success: false,
+              message: "The language already has this level, try to add another One!",
+          });
+      }
+      const [result] = await dbb.query(
+          `INSERT INTO course(workshopname, type, date,img,price,abv,zoom_link) VALUES ('${workshopname}','${type}','${date}','${img}','${price}','${abv}','${zoom_link}')`
+      );
+
+      res.status(200).json({
+          success: true,
+          message: "Workahop Data Added successfully",
+          data: result,
+      });
+  } catch (error) {
+      res.status(400).json({
+          success: false,
+          message: "Unfortunately, Unable to Add New Workshop",
+          error:error.toString(),
+      });
+  }
+};
+module.exports={getAllWorkshops,EngageToWorkshop,getEngagedWorkshopWhereUser,AddWorkshop}
