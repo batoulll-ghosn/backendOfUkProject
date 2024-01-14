@@ -1,4 +1,13 @@
 const dbb = require("../config/connection");
+const bcrypt = require('bcrypt');
+const validator = require('validator');
+const {
+    getStorage,
+    ref,
+    getDownloadURL,
+    uploadBytesResumable,
+  } = require('firebase/storage');
+  const storage = getStorage();
 const getAllWorkshops = async (req, res) => {
     try {
       const [result] = await dbb.query(`SELECT * FROM workshops`);
