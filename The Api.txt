@@ -50,3 +50,6 @@ post: http://localhost:8000/email/send
 https://ukbackendproject.onrender.com/email/registerToConf
 
 /courses/getEngagedCourseSchedule/:user_id
+
+
+INSERT INTO scheduletocourse(course_id,day,hour) VALUES ('${course_id}','${day}','${hour}')`

@@ -257,7 +257,7 @@ const getEngagedCourseWhereUser = async (req, res) => {
           });
         }
        };
-       const getSchedule = async (req, res) => {
+const getSchedule = async (req, res) => {
         try {
           const [result] = await dbb.query(`
             SELECT scheduletocourse.*, course.languageName, course.level, course.zoom_link
@@ -278,23 +278,27 @@ const getEngagedCourseWhereUser = async (req, res) => {
           });
         }
       };
-const AddSchedule = async (req, res) => { 
-  const {course_id} = req.body.course_id;
-  const {day, hour} = req.body;
-      try {
-          const [result] = await dbb.query(
-            `INSERT INTO scheduletocourse(course_id,day,hour) VALUES ('${course_id}','${day}','${hour}')`);
-          res.status(200).json({
-            success: true,
-            message: "Schedule added successfully",
-            data: result,
-          });
+const AddSchedule = async (req, res) => {
+        const {course_id,day,hour} = req.body;
+        console.log(course_id)
+        console.log(day)
+        console.log(hour)
+        try {
+            const [result] = await dbb.query(
+              `INSERT INTO scheduletocourse(course_id,day,hour) VALUES ('${course_id}','${day}','${hour}')`
+            );
+      
+            res.status(200).json({
+                success: true,
+                message: "Course Data Added successfully",
+                data: result,
+            });
         } catch (error) {
-          res.status(500).json({
-            success: false,
-            message: "Unable to add schedule",
-            error: error.message,
-          });
+            res.status(400).json({
+                success: false,
+                message: "Unfortunately, Unable to Add New Course",
+                error,
+            });
         }
       };
 const DeleteSchedule = async (req, res) => { 
