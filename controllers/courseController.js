@@ -282,10 +282,8 @@ const AddSchedule = async (req, res) => {
   const {course_id} = req.body.course_id;
   const {day, hour} = req.body;
       try {
-         
           const [result] = await dbb.query(
             `INSERT INTO scheduletocourse(course_id,day,hour) VALUES ('${course_id}','${day}','${hour}')`);
-      
           res.status(200).json({
             success: true,
             message: "Schedule added successfully",
