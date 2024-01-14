@@ -297,5 +297,23 @@ const AddSchedule = async (req, res) => {
           });
         }
       };
-      
-module.exports = {AddCourse,AddSchedule,UpdateCourse,deleteCourse,getSchedule, getEngagedCourseWhereUser,EngageToCourse,getAllCourses,getAllCoursesByType,getAllCoursesByName,getAllCoursesByLevel}
+const DeleteSchedule = async (req, res) => { 
+            try {
+              const [result] = await dbb.query(`DELETE FROM scheduletocourse WHERE id = ?`, [
+                req.params.id,
+              ]);
+              
+              res.status(200).json({
+                  success: true,
+                  message: "Schedule deleted successfully",
+                  data: result,
+                });
+              } catch (error) {
+                res.status(500).json({
+                  success: false,
+                  message: "Unable to delete schedule",
+                  error: error.message,
+                });
+              }
+            };
+module.exports = {AddCourse,AddSchedule,DeleteSchedule,UpdateCourse,deleteCourse,getSchedule, getEngagedCourseWhereUser,EngageToCourse,getAllCourses,getAllCoursesByType,getAllCoursesByName,getAllCoursesByLevel}
