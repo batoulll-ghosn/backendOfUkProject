@@ -72,23 +72,23 @@ const getEngagedWorkshopWhereUser = async (req, res) => {
       });
     }
  };
- const AddWorkshop = async (req, res) => {
-  const { workshopname, type, date,price,zoom_link} = req.body;
+const AddWorkshop = async (req, res) => {
+  const {workshopname,type, date,price,zoom_link} = req.body;
   const abv="w"
   try {
       const file = await FileUpload(req.file);
       const img = file.downloadURL;
-      const checkQuery = `SELECT COUNT(*) as count FROM workshops WHERE workshopname='${workshopname}'`;
+      const checkQuery = `SELECT * FROM workshops WHERE workshopname='${workshopname}'`;
       const [countResult] = await dbb.query(checkQuery);
 
-      if (countResult[0].count > 0) {
+      if (countResult.length > 0) {
           return res.status(400).json({
               success: false,
-              message: "The language already has this level, try to add another One!",
+              message: "This Workshop already exicts!",
           });
       }
       const [result] = await dbb.query(
-          `INSERT INTO course(workshopname, type, date,img,price,abv,zoom_link) VALUES ('${workshopname}','${type}','${date}','${img}','${price}','${abv}','${zoom_link}')`
+          `INSERT INTO workshops(workshopname, type, date,img,price,abv,zoom_link) VALUES ('${workshopname}','${type}','${date}','${img}','${price}','${abv}','${zoom_link}')`
       );
 
       res.status(200).json({
@@ -145,4 +145,23 @@ const giveCurrentDateTime = () => {
     const dateTime = date + ' ' + time;
     return dateTime;
   };
-module.exports={getAllWorkshops,EngageToWorkshop,getEngagedWorkshopWhereUser,AddWorkshop}
+const DeleteWorkshop = async (req, res) => { 
+    try {
+      const [result] = await dbb.query(`DELETE FROM workshops WHERE id = ?`, [
+        req.params.id,
+      ]);
+      
+      res.status(200).json({
+          success: true,
+          message: "Workshop deleted successfully",
+          data: result,
+        });
+      } catch (error) {
+        res.status(500).json({
+          success: false,
+          message: "Unable to delete workshop",
+          error: error.message,
+        });
+      }
+    };
+module.exports={getAllWorkshops,EngageToWorkshop,getEngagedWorkshopWhereUser,AddWorkshop,DeleteWorkshop}
