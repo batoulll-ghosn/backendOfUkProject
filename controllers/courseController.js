@@ -278,12 +278,12 @@ const getEngagedCourseWhereUser = async (req, res) => {
           });
         }
       };
-      const AddSchedule = async (req, res) => {
+const AddSchedule = async (req, res) => {
         try {
           const { course_id, day, hour } = req.params;
           const existingSchedule = await dbb.query(
             "SELECT * FROM `scheduletocourse` WHERE `day` = ? AND `hour` = ?",
-            [course_id, day, hour]
+            [day, hour]
           );
       
           if (existingSchedule.length > 0) {
