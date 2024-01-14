@@ -164,4 +164,46 @@ const DeleteWorkshop = async (req, res) => {
         });
       }
     };
-module.exports={getAllWorkshops,EngageToWorkshop,getEngagedWorkshopWhereUser,AddWorkshop,DeleteWorkshop}
+const UpdateWorkshop = async (req, res) => {
+      const { workshopname,type, date,price,zoom_link} = req.body;
+      const id=req.params.id;
+      try {
+          const [oldWorkshop] = await dbb.query(`SELECT * FROM workshops WHERE id=${id}`);
+          const oldImg = oldWorkshop[0].img;
+          console.log(oldWorkshop[0]);
+          let newImg;
+          if (req.file) {
+              const file = await FileUpload(req.file);
+              newImg = file.downloadURL;
+          } else {
+              newImg = oldImg;
+          }
+          
+          const checkQuery = `SELECT COUNT(*) as count FROM workshops WHERE workshopname='${workshopname}'`;
+          const [countResult] = await dbb.query(checkQuery);
+     
+          if (countResult[0].count > 0) {
+              return res.status(400).json({
+                  success: false,
+                  message: "You haven't Update this Workshop, or Maybe your edits are already present!",
+              });
+          }
+     
+          const [result] = await dbb.query( 
+              `UPDATE workshops SET workshopname='${workshopname}', type='${type}',date = '${date}', img='${newImg}', price='${price}',zoom_link='${zoom_link}' WHERE id=${id}`
+          );
+     
+          res.status(200).json({
+              success: true,
+              message: "Workshop Data Updated successfully",
+              data: result,
+          });
+      } catch (error) {
+          res.status(400).json({
+              success: false,
+              message: "Unfortunately, Unable to Update Workshop",
+              error:error.toString(),
+          });
+      }
+     };
+module.exports={getAllWorkshops,EngageToWorkshop,UpdateWorkshop,getEngagedWorkshopWhereUser,AddWorkshop,DeleteWorkshop}
