@@ -282,7 +282,7 @@ const AddSchedule = async (req, res) => {
         try {
           const { course_id, day, hour } = req.params;
           const existingSchedule = await dbb.query(
-            "SELECT * FROM `scheduletocourse` WHERE `day` = ? AND `hour` = ?",
+            "SELECT * FROM scheduletocourse WHERE day = ? AND hour = ?",
             [day, hour]
           );
       
