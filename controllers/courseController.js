@@ -333,4 +333,27 @@ const DeleteSchedule = async (req, res) => {
                 });
               }
             };
-module.exports = {AddCourse,AddSchedule,DeleteSchedule,UpdateCourse,deleteCourse,getSchedule, getEngagedCourseWhereUser,EngageToCourse,getAllCourses,getAllCoursesByType,getAllCoursesByName,getAllCoursesByLevel}
+const getAllCoursesWh = async (req, res) => {
+              try {
+                const [result] = await dbb.query(`
+                  SELECT enrolledtocourse.paid, users.email, enrolledtocourse.course_id, course.languageName, course.level
+                  FROM enrolledtocourse 
+                    LEFT JOIN users ON enrolledtocourse.user_id = users.id 
+                    LEFT JOIN course ON enrolledtocourse.course_id = course.id;
+                `);
+            
+                res.status(200).json({
+                  success: true,
+                  message: "Users data retrieved successfully",
+                  data: result,
+                });
+              } catch (error) {
+                res.status(400).json({
+                  success: false,
+                  message: "Unable to get new user",
+                  error,
+                });
+              }
+            };
+            
+module.exports = {AddCourse,AddSchedule,DeleteSchedule,getAllCoursesWh,UpdateCourse,deleteCourse,getSchedule, getEngagedCourseWhereUser,EngageToCourse,getAllCourses,getAllCoursesByType,getAllCoursesByName,getAllCoursesByLevel}
