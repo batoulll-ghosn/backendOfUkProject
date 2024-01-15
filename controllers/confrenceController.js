@@ -174,4 +174,26 @@ const deleteConf = async (req, res) => {
           });
         }
       };
-module.exports={getAllConfrences,getAllConferenceByName,AddConference,UpdateConference,deleteConf}
+const getAllConfsWh = async (req, res) => {
+        try {
+          const [result] = await dbb.query(`
+            SELECT engagedtoconfrence.paid, users.email, engagedtoconfrence.confrence_id, confrences.conference_name,confrences.date
+            FROM engagedtoconfrence 
+              LEFT JOIN users ON engagedtoconfrence.user_id = users.id 
+              LEFT JOIN course ON engagedtoconfrence.confrence_id = confrence_id;
+          `);
+      
+          res.status(200).json({
+            success: true,
+            message: "Users data retrieved successfully",
+            data: result,
+          });
+        } catch (error) {
+          res.status(400).json({
+            success: false,
+            message: "Unable to get new user",
+            error,
+          });
+        }
+      };
+module.exports={getAllConfrences,getAllConferenceByName,AddConference,UpdateConference,deleteConf,getAllConfsWh}
