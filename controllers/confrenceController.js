@@ -177,10 +177,10 @@ const deleteConf = async (req, res) => {
 const getAllConfsWh = async (req, res) => {
         try {
           const [result] = await dbb.query(`
-            SELECT engagedtoconfrence.paid, users.email, engagedtoconfrence.confrence_id, confrences.conference_name,confrences.date
+            SELECT engagedtoconfrence.paid, users.email, engagedtoconfrence.confrence_id, confrences.conference_name, confrences.date
             FROM engagedtoconfrence 
-              LEFT JOIN users ON engagedtoconfrence.user_id = users.id 
-              LEFT JOIN course ON engagedtoconfrence.confrence_id = confrence_id;
+            LEFT JOIN users ON engagedtoconfrence.user_id = users.id 
+            LEFT JOIN confrences ON engagedtoconfrence.confrence_id = confrences.id
           `);
       
           res.status(200).json({
@@ -196,4 +196,5 @@ const getAllConfsWh = async (req, res) => {
           });
         }
       };
+      
 module.exports={getAllConfrences,getAllConferenceByName,AddConference,UpdateConference,deleteConf,getAllConfsWh}
