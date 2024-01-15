@@ -355,5 +355,29 @@ const getAllCoursesWh = async (req, res) => {
                 });
               }
             };
+const updatePaidStatus = async (req, res) => {
+              const { email } = req.params;
+              try {
+                await dbb.query(`
+                  UPDATE enrolledtocourse
+                  SET paid = 1
+                  WHERE user_id = (SELECT id FROM users WHERE email = ?);
+                `, [email]);
             
-module.exports = {AddCourse,AddSchedule,DeleteSchedule,getAllCoursesWh,UpdateCourse,deleteCourse,getSchedule, getEngagedCourseWhereUser,EngageToCourse,getAllCourses,getAllCoursesByType,getAllCoursesByName,getAllCoursesByLevel}
+                res.status(200).json({
+                  success: true,
+                  message: `Paid status updated successfully for email: ${email}`,
+                });
+              } catch (error) {
+                res.status(400).json({
+                  success: false,
+                  message: "Unable to update paid status",
+                  error,
+                });
+              }
+            };
+            
+            
+            
+               
+module.exports = {AddCourse,AddSchedule,DeleteSchedule,updatePaidStatus,getAllCoursesWh,UpdateCourse,deleteCourse,getSchedule, getEngagedCourseWhereUser,EngageToCourse,getAllCourses,getAllCoursesByType,getAllCoursesByName,getAllCoursesByLevel}
