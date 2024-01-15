@@ -4,7 +4,7 @@ const upload = multer({ storage: multer.memoryStorage() });
 const router = express.Router();
 const control = require("../controllers/confrenceController");
 router.get("/getAll", control.getAllConfrences);
-router.get("/getAll", control.getAllConfsWh);
+router.get("/getAll/:email", control.getAllConfsWh);
 router.get("/getByConferenceName/:conference_name", control.getAllConferenceByName);
 router.post('/AddConference',upload.single('img'), control.AddConference);
 router.put('/EditConference/:id',upload.single('img'),control.UpdateConference);
