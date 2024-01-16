@@ -222,7 +222,7 @@ const AddUser = async (req, res) => {
 };
 const loginUser = async (req, res) => {
     const { Email, password } = req.body;
- 
+
     try {
         const [result] = await dbb.query(
             `SELECT * FROM users WHERE email = ?`,
@@ -234,35 +234,36 @@ const loginUser = async (req, res) => {
                 message: 'User not found',
             });
         }
- 
-        const hashedPassword = result[0].password;
+
+        const hashedPassword = result.password;
         console.log('Entered Password:', password);
         console.log('Hashed Password:', hashedPassword);
- 
+
         const passwordMatch = await bcrypt.compare(password, hashedPassword);
- 
+
         if (!passwordMatch) {
             return res.status(401).json({
                 success: false,
                 message: 'Wrong password',
             });
         }
-        const token = generateToken(response[0].ID, response[0].role);
+        const token = generateToken(result.ID, result.role);
 
         return res.status(200).json({
             success: true,
             message: 'Login successfully',
             token: token,
-          });
- 
-          } catch (error) {
-           res.status(400).json({
+        });
+
+    } catch (error) {
+        res.status(400).json({
             success: false,
             message: 'Unable to log in',
             error: error.message,
         });
     }
- };
+};
+
 const FileUpload = async (file) => {
     const dateTime = giveCurrentDateTime();
     
