@@ -73,7 +73,7 @@ const onRegisterEmail  = async (req, res) => {
             html: `<p>Greetings</p>
             <p>We hope this email finds you as well!</p>
             <p style="padding: 12px; border-left: 4px solid #d0d0d0; font-style: italic;">
-              you Have registered to ${content} </p>
+              Thank for ${content} </p>
               <p>To confirm your registeration you need to transfer the price mentioned using <b> YOUR EMAIL <b> on the following account 0000 1111 </p>
             <p>
                 Sincerely,<br>The United Kingdom For Education and Learning Public Relations' team
