@@ -1,5 +1,6 @@
 const dbb = require("../config/connection");
 const bcrypt = require('bcrypt');
+const { generateToken } = require('../extra/generateToken');
 const validator = require('validator');
 const {
     getStorage,
@@ -219,7 +220,7 @@ const AddUser = async (req, res) => {
       });
   }
 };
- const loginUser = async (req, res) => {
+const loginUser = async (req, res) => {
     const { Email, password } = req.body;
  
     try {
@@ -246,10 +247,12 @@ const AddUser = async (req, res) => {
                 message: 'Wrong password',
             });
         }
- 
+        const token = generateToken(response[0].ID, response[0].role);
+
         return res.status(200).json({
             success: true,
             message: 'Login successfully',
+            token: token,
           });
  
           } catch (error) {
