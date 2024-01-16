@@ -196,5 +196,46 @@ const getAllConfsWh = async (req, res) => {
           });
         }
       };
+const updatePaidStatus = async (req, res) => {
+        const { email } = req.params;
+        try {
+          await dbb.query(`
+            UPDATE engagedtoconfrence
+            SET paid = 1
+            WHERE user_id = (SELECT id FROM users WHERE email = ?);
+          `, [email]);
       
-module.exports={getAllConfrences,getAllConferenceByName,AddConference,UpdateConference,deleteConf,getAllConfsWh}
+          res.status(200).json({
+            success: true,
+            message: `Paid status updated successfully for email: ${email}`,
+          });
+        } catch (error) {
+          res.status(400).json({
+            success: false,
+            message: "Unable to update paid status",
+            error,
+          });
+        }
+      };
+const updateNOTPaidStatus = async (req, res) => {
+        const { email } = req.params;
+        try {
+          await dbb.query(`
+            UPDATE engagedtoconfrence
+            SET paid = 0
+            WHERE user_id = (SELECT id FROM users WHERE email = ?);
+          `, [email]);
+      
+          res.status(200).json({
+            success: true,
+            message: `Paid status updated successfully for email: ${email}`,
+          });
+        } catch (error) {
+          res.status(400).json({
+            success: false,
+            message: "Unable to update paid status",
+            error,
+          });
+        }
+      };
+module.exports={getAllConfrences,getAllConferenceByName,updateNOTPaidStatus,updatePaidStatus,AddConference,UpdateConference,deleteConf,getAllConfsWh}
