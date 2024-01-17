@@ -202,8 +202,6 @@ const AddUser = async (req, res) => {
   }
   const hashedPassword = await bcrypt.hash(password, 10);
   try {
-      const file = await FileUpload(req.file);
-      const img = file.downloadURL;
       const [result] = await dbb.query(
           `INSERT INTO users(email, fullName,phone, role, created_at, active, password) VALUES ("${email}", "${fullName}", "${img}", "${phone}", "${role}", NOW(), "${active}", "${hashedPassword}")`
       );
