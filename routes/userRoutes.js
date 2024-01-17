@@ -16,5 +16,6 @@ router.put('/switchToStudent/:id',control.switchToStudent);
 router.put('/updateToActiveUser/:id',control.switchToActivateUser);
 router.put('/updateToNonActiveUser/:id',control.switchToNonActivateUser);
 router.post('/login',control.loginUser);
+router.post('/loginGoogle',control.loginUserGoogle);
 router.delete('/deleteUser/:id',control.deleteUser);
 module.exports = router;
