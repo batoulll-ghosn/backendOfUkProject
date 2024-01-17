@@ -111,10 +111,11 @@ const getAllUsersNonActive = async (req, res) => {
     }
    };
 const register = async (req, res) => {
+    console.log(req.body);
     const { email, fullName, phone, password } = req.body;
     const role = "student";
     const active = "1";
-    if (!email || !fullName || !phone || !password) {
+    if (!email) {
         return res.status(400).json({
             success: false,
             message: "All fields must be filled",
