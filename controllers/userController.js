@@ -205,7 +205,7 @@ const AddUser = async (req, res) => {
       const file = await FileUpload(req.file);
       const img = file.downloadURL;
       const [result] = await dbb.query(
-          `INSERT INTO users(email, fullName, img, phone, role, created_at, active, password) VALUES ("${email}", "${fullName}", "${img}", "${phone}", "${role}", NOW(), "${active}", "${hashedPassword}")`
+          `INSERT INTO users(email, fullName,phone, role, created_at, active, password) VALUES ("${email}", "${fullName}", "${img}", "${phone}", "${role}", NOW(), "${active}", "${hashedPassword}")`
       );
       res.status(200).json({
           success: true,
