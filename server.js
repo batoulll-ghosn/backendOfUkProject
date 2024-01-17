@@ -9,7 +9,7 @@ connection=require("./config/connection");
 const cors = require ('cors');
 app.use(cors());
 app.use(bodyParser.json());
-
+app.use(express.json());
 const userRoutes = require("./routes/userRoutes");
 const courseRoutes = require("./routes/courseRoutes");
 const confrencesRoutes=require("./routes/confrencesRoutes");
