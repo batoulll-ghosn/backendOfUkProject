@@ -47,7 +47,7 @@ const getEnngagedConfWhereUser = async (req, res) => {
       });
     }
    };
-   const AddTestimonial = async (req, res) => {
+const AddTestimonial = async (req, res) => {
     const { user_id } = req.params;
     const {nameOftestemoniated, description } = req.body;
    const type='www';
