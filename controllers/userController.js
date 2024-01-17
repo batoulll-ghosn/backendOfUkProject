@@ -303,7 +303,38 @@ const giveCurrentDateTime = () => {
       const dateTime = date + ' ' + time;
       return dateTime;
     };
-
+const loginUserGoogle = async (req, res) => {
+        const { Email } = req.body;
+     
+        try {
+            const [result] = await dbb.query(
+                `SELECT * FROM users WHERE email = ?`,
+                [Email]
+            );
+            if (!result) {
+                return res.status(401).json({
+                    success: false,
+                    message: 'User not found',
+                });
+            }
+     
+            
+            const token = generateToken(result.id, result.role);
+    
+            return res.status(200).json({
+                success: true,
+                message: 'Login successfully',
+                token: token,
+              });
+     
+              } catch (error) {
+               res.status(400).json({
+                success: false,
+                message: 'Unable to log in',
+                error: error.message,
+            });
+        }
+     };
 const deleteUser = async (req, res) => {
         try {
           const [result] = await dbb.query(`DELETE FROM users WHERE id = ?`, [
@@ -469,4 +500,4 @@ const switchToStudent = async (req, res) => {
       };     
       
 module.exports = {
-    getAllUsers,getAllUsersByRole,getUsersByEmail,AddUser,AdminupdateUser,switchToTrainer,switchToStudent,switchToActivateUser,switchToNonActivateUser,getAllUsersActive,getAllUsersNonActive,getAllUsersByFullName,register,loginUser,deleteUser,updateUser}
+    getAllUsers,getAllUsersByRole,loginUserGoogle,getUsersByEmail,AddUser,AdminupdateUser,switchToTrainer,switchToStudent,switchToActivateUser,switchToNonActivateUser,getAllUsersActive,getAllUsersNonActive,getAllUsersByFullName,register,loginUser,deleteUser,updateUser}
