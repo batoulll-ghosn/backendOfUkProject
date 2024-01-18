@@ -1,9 +1,9 @@
-const jwt = require('jwt-simple');
+const jwt = require('jsonwebtoken');
 
 exports.generateToken = (id, role) => {
- const payload = { id, role };
- const secret = 'B@toul#123456789'; 
- const token = jwt.encode(payload, secret);
- console.log(token);
- return token;
+  const token = jwt.sign({ id, role }, 'batoul@#123456789', {
+    expiresIn: '1h',
+  });
+  console.log(token);
+  return token;
 };
