@@ -96,6 +96,29 @@ const UpdateToSelectedTestimonial = async (req, res) => {
         });
     }
 };
+const UpdateToNOTSelectedTestimonial = async (req, res) => {
+    const { id } = req.params;
+    const selected=0;
+  
+    try {
+       
+
+        const [result] = await dbb.query( `UPDATE testemoniage SET 
+            selected =? WHERE id=?`, [id, selected]);
+
+        res.status(200).json({
+            success: true,
+            message: "Testimonial data added successfully",
+            data: result,
+        });
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            message: "Unable to add the testimonial",
+            error,
+        });
+    }
+};
 const deleteTestimonial = async (req, res) => {
   const { id } = req.params;
 
@@ -141,4 +164,4 @@ const getAllTestimonials = async (req, res) => {
   }
 };
 
-module.exports={EngageToConf,getEnngagedConfWhereUser,UpdateToSelectedTestimonial,AddTestimonial,deleteTestimonial,getAllTestimonials};
+module.exports={EngageToConf,getEnngagedConfWhereUser,UpdateToSelectedTestimonial,UpdateToNOTSelectedTestimonial,AddTestimonial,deleteTestimonial,getAllTestimonials};

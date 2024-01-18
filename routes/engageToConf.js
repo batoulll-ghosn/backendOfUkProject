@@ -5,6 +5,7 @@ router.get('/getEngagedConf/:user_id', control.getEnngagedConfWhereUser);
 router.get('/getAllTestimonial', control.getAllTestimonials);
 router.post("/engageToConference", control.EngageToConf);
 router.put("/updateToSelected/:id", control.UpdateToSelectedTestimonial);
+router.put("/updateToNOTSelected/:id", control.UpdateToNOTSelectedTestimonial);
 router.post("/AddTestimonial/:user_id", control.AddTestimonial);
 router.delete('/deleteTestimonial/:id',control.deleteTestimonial);
 module.exports = router;
