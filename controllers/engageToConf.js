@@ -51,13 +51,37 @@ const AddTestimonial = async (req, res) => {
     const { user_id } = req.params;
     const {nameOftestemoniated, description } = req.body;
    const type='www';
+   const selected=0;
     try {
         const query = `
             INSERT INTO testemoniage
-            (user_id, type, nameOftestemoniated, description)
-            VALUES (?, ?, ?, ?)`;
+            (user_id, type, nameOftestemoniated, description,selected)
+            VALUES (?, ?, ?, ?,?)`;
 
         const [result] = await dbb.query(query, [user_id, type, nameOftestemoniated, description]);
+
+        res.status(200).json({
+            success: true,
+            message: "Testimonial data added successfully",
+            data: result,
+        });
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            message: "Unable to add the testimonial",
+            error,
+        });
+    }
+};
+const UpdateToSelectedTestimonial = async (req, res) => {
+    const { id } = req.params;
+    const selected=1;
+  
+    try {
+       
+
+        const [result] = await dbb.query( `UPDATE testemoniage SET 
+            selected =? WHERE id=?`, [id, selected]);
 
         res.status(200).json({
             success: true,
@@ -117,4 +141,4 @@ const getAllTestimonials = async (req, res) => {
   }
 };
 
-module.exports={EngageToConf,getEnngagedConfWhereUser,AddTestimonial,deleteTestimonial,getAllTestimonials};
+module.exports={EngageToConf,getEnngagedConfWhereUser,UpdateToSelectedTestimonial,AddTestimonial,deleteTestimonial,getAllTestimonials};
