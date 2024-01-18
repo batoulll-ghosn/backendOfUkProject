@@ -75,13 +75,12 @@ const AddTestimonial = async (req, res) => {
 };
 const UpdateToSelectedTestimonial = async (req, res) => {
     const { id } = req.params;
-    const selected=1;
   
     try {
        
 
         const [result] = await dbb.query( `UPDATE testemoniage SET 
-            selected =? WHERE id=?`, [id, selected]);
+            selected = 1 WHERE id=?`, [id]);
 
         res.status(200).json({
             success: true,
@@ -98,13 +97,13 @@ const UpdateToSelectedTestimonial = async (req, res) => {
 };
 const UpdateToNOTSelectedTestimonial = async (req, res) => {
     const { id } = req.params;
-    const selected=0;
+  
   
     try {
        
 
         const [result] = await dbb.query( `UPDATE testemoniage SET 
-            selected =? WHERE id=?`, [id, selected]);
+            selected =0 WHERE id=?`, [id]);
 
         res.status(200).json({
             success: true,
