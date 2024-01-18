@@ -2,39 +2,39 @@ const jwt = require('jsonwebtoken');
 
 const isAuthenticated = (roles) => {
   return (req, res, next) => {
-    if (
-      !req.headers.authorization ||
-      !req.headers.authorization.startsWith('Bearer')
-    )
-      return res.status(400).json({
-        success: false,
-        message: 'No auth credentials, unable to check if authenticated',
-      });
+    const authorizationHeader = req.headers.authorization;
 
-    const token = req.headers.authorization.split(' ')[1];
+    if (!authorizationHeader || !authorizationHeader.startsWith("Bearer")) {
+      return res
+        .status(401)
+        .json({
+          message: "No authentication credentials, unable to check if authenticated",
+        });
+    }
 
-    if (!token)
-      return res.status(400).json({
-        success: false,
-        message: 'No token, unable to check if authenticated',
-      });
+    const token = authorizationHeader.split(" ")[1];
+
+    if (!token) {
+      return res
+        .status(401)
+        .json({
+          error: "Unable to access token",
+          message: 'No token, unable to check if authenticated'
+        });
+    }
+
     try {
-      const credentials = jwt.verify(token, 'batoul@#123456789');
+      const credentials = jwt.verify(token, "batoul@21234532rgth");
       const hasAccess = roles.includes(credentials.role);
       if (!hasAccess)
         return res.status(400).json({
           success: false,
-          message: 'You are not authenticated',
+          message: "You are not authenticated",
         });
       next();
     } catch (error) {
-      return res.status(400).json({
-        success: false,
-        message: 'Error occured',
-        error: error.message,
-      });
+      return res.status(401).json({ message: "Error occured" });
     }
-  };
+  }
 };
-
 module.exports = isAuthenticated;
