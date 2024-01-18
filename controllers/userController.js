@@ -246,7 +246,7 @@ const loginUser = async (req, res) => {
             });
         }
         const token = generateToken(result.id, result.role);
-
+        
         return res.status(200).json({
             success: true,
             message: 'Login successfully',
