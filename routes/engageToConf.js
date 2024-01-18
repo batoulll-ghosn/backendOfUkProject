@@ -3,6 +3,7 @@ const router = express.Router();
 const control = require("../controllers/engageToConf");
 router.get('/getEngagedConf/:user_id', control.getEnngagedConfWhereUser);
 router.get('/getAllTestimonial', control.getAllTestimonials);
+router.get('/getAllTestimonialSelected', control.getAllTestimonialsSelected);
 router.post("/engageToConference", control.EngageToConf);
 router.put("/updateToSelected/:id", control.UpdateToSelectedTestimonial);
 router.put("/updateToNOTSelected/:id", control.UpdateToNOTSelectedTestimonial);

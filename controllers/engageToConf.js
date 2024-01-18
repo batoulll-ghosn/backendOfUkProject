@@ -163,5 +163,22 @@ const getAllTestimonials = async (req, res) => {
       });
   }
 };
-
-module.exports={EngageToConf,getEnngagedConfWhereUser,UpdateToSelectedTestimonial,UpdateToNOTSelectedTestimonial,AddTestimonial,deleteTestimonial,getAllTestimonials};
+const getAllTestimonialsSelected = async (req, res) => {
+    try {
+        const query = "SELECT * FROM testemoniage WHERE selected=1";
+        const [testimonials] = await dbb.query(query);
+  
+        res.status(200).json({
+            success: true,
+            message: "Testimonials retrieved successfully",
+            data: testimonials,
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Unable to retrieve testimonials",
+            error,
+        });
+    }
+  };
+module.exports={EngageToConf,getEnngagedConfWhereUser,getAllTestimonialsSelected,UpdateToSelectedTestimonial,UpdateToNOTSelectedTestimonial,AddTestimonial,deleteTestimonial,getAllTestimonials};
