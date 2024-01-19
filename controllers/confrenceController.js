@@ -115,7 +115,7 @@ const UpdateConference = async (req, res) => {
             const checkQuery = `SELECT COUNT(*) as count FROM confrences WHERE conference_name='${conference_name}'`;
             const [countResult] = await dbb.query(checkQuery);
        
-            if (countResult[0].count > 0) {
+            if (countResult[0].count > 1) {
                 return res.status(400).json({
                     success: false,
                     message: "You haven't Update this Conference, or Maybe your edits are already present!",
