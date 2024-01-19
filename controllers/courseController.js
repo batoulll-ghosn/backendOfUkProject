@@ -125,7 +125,7 @@ const UpdateCourse = async (req, res) => {
         const checkQuery = `SELECT COUNT(*) as count FROM course WHERE languageName='${languageName}' AND level='${level}'`;
         const [countResult] = await dbb.query(checkQuery);
    
-        if (countResult[0].count > 0) {
+        if (countResult[0].count > 1) {
             return res.status(400).json({
                 success: false,
                 message: "You haven't Update this Course, or Maybe your edits are already present!",
