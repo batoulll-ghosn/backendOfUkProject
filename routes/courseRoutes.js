@@ -9,6 +9,7 @@ router.get("/getByLanguageName/:languageName", control.getAllCoursesByName);
 router.get("/getByType/:type", control.getAllCoursesByType);
 router.get("/getByLanguageLevel/:level", control.getAllCoursesByLevel);
 router.post('/EngageToCourse',control.EngageToCourse);
+router.post('/EngageTeacherCourse',control.EngageTeacherCourse);
 router.post('/AddCourse',upload.single('img'), control.AddCourse);
 router.post('/AddSchedule/:course_id/:day/:hour',control.AddSchedule);
 router.put('/EditCourse/:id',upload.single('img'),control.UpdateCourse);
