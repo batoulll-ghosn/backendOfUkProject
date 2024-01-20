@@ -321,7 +321,7 @@ const loginUserGoogle = async (req, res) => {
      
             
             const token = generateToken(result[0].id, result[0].role);
-    
+                   //test//
             return res.status(200).json({
                 success: true,
                 message: 'Login successfully',
