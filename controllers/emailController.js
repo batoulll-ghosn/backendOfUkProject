@@ -15,16 +15,16 @@ const sendEmail = async (req, res) => {
         const mailOptions = {
             from: process.env.EMAIL_USER,
             to: email,
-            subject: 'Regarding the subscription in the United Kingdom for Education and Learning',
+            subject: 'Regarding the subscription in the United Kingdom for Education and Training',
             html: `<p>Hello</p>
-            <p>You got a new message from United Kingdom For education and learning</p>
+            <p>You got a new message from United Kingdom For education and training</p>
             <p style="padding: 12px; border-left: 4px solid #d0d0d0; font-style: italic;">
                 thank you for subscribing in our website,
                 we hope to see you a part of our community,
                 for joining this community use the following link "https://united-kingdom-for-education-and.onrender.com/signup"
             </p>
             <p>
-                Sincerely,<br>The United Kingdom For Education and Learning Public Relations' team
+                Sincerely,<br>The United Kingdom For Education and Training Public Relations' team
             </p>`,
         };
 
@@ -69,14 +69,14 @@ const onRegisterEmail  = async (req, res) => {
         const mailOptions = {
             from: process.env.EMAIL_USER,
             to: email,
-            subject: 'Regarding the subscription in the United Kingdom for Education and Learning',
+            subject: 'Regarding the Registration in the United Kingdom for Education and Training',
             html: `<p>Greetings</p>
             <p>We hope this email finds you as well!</p>
             <p style="padding: 12px; border-left: 4px solid #d0d0d0; font-style: italic;">
               Thank for ${content} </p>
               <p>To confirm your registeration you need to transfer the price mentioned using <b> YOUR EMAIL <b> on the following account 0000 1111 </p>
             <p>
-                Sincerely,<br>The United Kingdom For Education and Learning Public Relations' team
+                Sincerely,<br>The United Kingdom For Education and Training Public Relations' team
             </p>`,
         };
 
