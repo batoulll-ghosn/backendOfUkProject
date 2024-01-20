@@ -4,6 +4,7 @@ const upload = multer({ storage: multer.memoryStorage() });
 const router = express.Router();
 const control = require("../controllers/confrenceController");
 router.get("/getAll", control.getAllConfrences);
+router.get("/getConferenceById/:id", control.getConferenceById);
 router.get("/getAllWh", control.getAllConfsWh);
 router.put('/UpdateToPaid/:email',control.updatePaidStatus);
 router.put('/UpdateToNotPaid/:email',control.updateNOTPaidStatus);

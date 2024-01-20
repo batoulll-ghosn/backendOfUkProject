@@ -24,6 +24,23 @@ const getAllConfrences = async (req, res) => {
       });
     }
   };
+const getConferenceById = async (req, res) => {
+  const id=req.params.id;
+    try {
+      const [result] = await dbb.query(`SELECT * FROM confrences WHERE id=${id} `);
+      res.status(200).json({
+        success: true,
+        message: "Conference data retrieved successfully",
+        data: result,
+      });
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        message: "Unable to get Conference",
+        error,
+      });
+    }
+  };
   const AddConference = async (req, res) => {
     const { conference_name, type, date,price, description,zoom_link,resources} = req.body;
     const abv="con"
@@ -238,4 +255,4 @@ const updateNOTPaidStatus = async (req, res) => {
           });
         }
       };
-module.exports={getAllConfrences,getAllConferenceByName,updateNOTPaidStatus,updatePaidStatus,AddConference,UpdateConference,deleteConf,getAllConfsWh}
+module.exports={getAllConfrences,getAllConferenceByName,getConferenceById,updateNOTPaidStatus,updatePaidStatus,AddConference,UpdateConference,deleteConf,getAllConfsWh}
