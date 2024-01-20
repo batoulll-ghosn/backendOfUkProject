@@ -24,6 +24,23 @@ const getAllCourses = async (req, res) => {
       });
     }
   };
+const getAllCoursewhereID = async (req, res) => {
+  const id=req.params.id;
+    try {
+      const [result] = await dbb.query(`SELECT * FROM course WHERE id=${id}`);
+      res.status(200).json({
+        success: true,
+        message: "Users data retrieved successfully",
+        data: result,
+      });
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        message: "Unable to get new user",
+        error,
+      });
+    }
+  };
 const getAllCoursesByName = async (req, res) => {
     try {
      const { languageName } = req.params;
@@ -428,4 +445,4 @@ const updateNOTPaidStatus = async (req, res) => {
             
             
                
-module.exports = {AddCourse,AddSchedule,DeleteSchedule,updatePaidStatus,EngageTeacherCourse,updateNOTPaidStatus,getAllCoursesWh,UpdateCourse,deleteCourse,getSchedule, getEngagedCourseWhereUser,EngageToCourse,getAllCourses,getAllCoursesByType,getAllCoursesByName,getAllCoursesByLevel}
+module.exports = {AddCourse,AddSchedule,getAllCoursewhereID,DeleteSchedule,updatePaidStatus,EngageTeacherCourse,updateNOTPaidStatus,getAllCoursesWh,UpdateCourse,deleteCourse,getSchedule, getEngagedCourseWhereUser,EngageToCourse,getAllCourses,getAllCoursesByType,getAllCoursesByName,getAllCoursesByLevel}

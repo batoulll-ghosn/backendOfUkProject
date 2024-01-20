@@ -4,6 +4,7 @@ const upload = multer({ storage: multer.memoryStorage() });
 const router = express.Router();
 const control = require("../controllers/courseController");
 router.get("/getAll", control.getAllCourses);
+router.get("/getCourseById/:id", control.getAllCoursewhereID);
 router.get("/getAllWh", control.getAllCoursesWh);
 router.get("/getByLanguageName/:languageName", control.getAllCoursesByName);
 router.get("/getByType/:type", control.getAllCoursesByType);
