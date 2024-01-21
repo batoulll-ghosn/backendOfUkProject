@@ -69,13 +69,15 @@ const EngageToWorkshop = async (req, res) => {
         });
     }
   };
-const getEngagedWorkshopWhereUser = async (req, res) => {
-    const {user_id} = req.params;
+  const getEngagedWorkshopWhereUser = async (req, res) => {
+    const { user_id } = req.params;
     try {
-      const [result] = await dbb.query(`SELECT workshops.*, engagedtoworkshop.workshop_id, engagedtoworkshop.paid
-      FROM workshops 
-     JOIN engagedtoworkshop ON engagedtoworkshop.workshop_id = workshops.id
-      WHERE engagedtoworkshop.paid = '1';`, [user_id]);
+      const [result] = await dbb.query(`
+        SELECT workshops.*, engagedtoworkshop.workshop_id, engagedtoworkshop.paid
+        FROM workshops 
+        JOIN engagedtoworkshop ON engagedtoworkshop.workshop_id = workshops.id
+        WHERE engagedtoworkshop.paid = '1' AND engagedtoworkshop.user_id = ?;
+      `, [user_id]);
       res.status(200).json({
         success: true,
         message: "Workshop data retrieved successfully",
@@ -88,7 +90,8 @@ const getEngagedWorkshopWhereUser = async (req, res) => {
         error,
       });
     }
- };
+  };
+  
 const AddWorkshop = async (req, res) => {
   const {workshopname,type, date,price,zoom_link} = req.body;
   const abv="w"
