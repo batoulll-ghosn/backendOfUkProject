@@ -354,46 +354,56 @@ const deleteUser = async (req, res) => {
           });
         }
       };
-const updateUser = async (req, res) => {
+      const updateUser = async (req, res) => {
         const { email, fullName, oldPassword, newPassword } = req.body;
         const userId = req.params.id;
-        const [oldUser] = await dbb.query(
-            `SELECT * FROM users WHERE id = ?`,
-            [userId]
-        );
-        const passwordMatch = await bcrypt.compare(oldPassword, oldUser[0].password);
-        if (!passwordMatch) {
-            return res.status(400).json({
-                success: false,
-                message: 'Old password is incorrect',
-            });
-        }
-     
-        // Hash the new password if it exists
-        let hashedPassword;
-        if (newPassword) {
-            hashedPassword = await bcrypt.hash(newPassword, 10);
-        }
-     
+    
         try {
-            
-            const [result] = await dbb.query(
-                `UPDATE users SET email = ?, fullName = ?,password = ? WHERE id = ?`,
-                [email, fullName,hashedPassword || oldUser[0].password, userId]
+            const [oldUser] = await dbb.query(
+                `SELECT * FROM users WHERE id = ?`,
+                [userId]
             );
-     
+    
+            if (!oldUser || oldUser.length === 0) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'User not found',
+                });
+            }
+            const passwordMatch = oldPassword ? await bcrypt.compare(oldPassword, oldUser[0].password) : false;
+           console.log(oldPassword)
+            if (!passwordMatch) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Old password is incorrect',
+                });
+            }
+    
+        
+            let hashedPassword;
+            if (newPassword) {
+                hashedPassword = await bcrypt.hash(newPassword, 10);
+            }
+    
+            const [result] = await dbb.query(
+                `UPDATE users SET email = ?, fullName = ?, password = ? WHERE id = ?`,
+                [email, fullName, hashedPassword || oldUser[0].password, userId]
+            );
+    
             res.status(200).json({
                 success: true,
                 message: 'Data updated successfully',
             });
         } catch (error) {
-            res.status(400).json({
+            console.error(error);
+            res.status(500).json({
                 success: false,
                 message: 'Unable to update data',
-                error,
+                error: error.message,
             });
         }
-     };
+    };
+    
 const AdminupdateUser = async (req, res) => {
       const { email, fullName } = req.body;
       const userId = req.params.id;
