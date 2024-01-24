@@ -103,3 +103,6 @@ HOST=b1s0wdsrra7frccxbuvr-mysql.services.clever-cloud.com
 USER=umoytzm5nwyta8ct
 PASS=nqGAAKMQIWpQ2dZ6chEl
 DATABASE=b1s0wdsrra7frccxbuvr
+
+
+autoComplete="off"
