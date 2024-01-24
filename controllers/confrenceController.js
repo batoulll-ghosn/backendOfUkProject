@@ -215,11 +215,12 @@ const getAllConfsWh = async (req, res) => {
       };
 const updatePaidStatus = async (req, res) => {
         const { email } = req.params;
+        const { conference_id } = req.params;
         try {
           await dbb.query(`
             UPDATE engagedtoconfrence
             SET paid = 1
-            WHERE user_id = (SELECT id FROM users WHERE email = ?);
+            WHERE user_id = (SELECT id FROM users WHERE email = ?) AND confrence_id=${conference_id};
           `, [email]);
       
           res.status(200).json({
@@ -236,11 +237,12 @@ const updatePaidStatus = async (req, res) => {
       };
 const updateNOTPaidStatus = async (req, res) => {
         const { email } = req.params;
+        const { conference_id } = req.params;
         try {
           await dbb.query(`
             UPDATE engagedtoconfrence
             SET paid = 0
-            WHERE user_id = (SELECT id FROM users WHERE email = ?);
+            WHERE user_id = (SELECT id FROM users WHERE email = ?) AND confrence_id=${conference_id};
           `, [email]);
       
           res.status(200).json({
