@@ -145,3 +145,7 @@ ALTER TABLE EnrolledToCourse
 ALTER TABLE users
   CHANGE COLUMN username email VARCHAR(255);
   
+HOST=mysql-unitedkingdom.alwaysdata.net
+USER=344358_test
+PASS=B@toul2024
+DATABASE=unitedkingdom_db
