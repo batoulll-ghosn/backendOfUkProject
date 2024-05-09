@@ -5,10 +5,10 @@ const USER=process.env.USER;
 const PASS=process.env.PASS;
 const DATABASE=process.env.DATABASE;
 const connection = mysql.createPool({
-  host: HOST,
-  user:USER,
-  password: PASS,
-  database: DATABASE,
+  host: 'mysql-unt.alwaysdata.net',
+  user:'unt',
+  password: 'B@toul2024',
+  database: 'unt_db',
 });
 
 connection.getConnection((err) => {
